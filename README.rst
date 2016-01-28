@@ -79,4 +79,4 @@ Compiling gpsd with shared memory support
    $ git tag
    $ git checkout release-3.16
    $ scons prefix=/usr/local shm_export=yes
-   $ scons install
+   $ sudo scons install
