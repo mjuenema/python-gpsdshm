@@ -74,7 +74,7 @@ Compiling gpsd with shared memory support
 
 .. code-block:: console
 
-   $ git clone git://git.sv.gnu.org/gpsd.git
+   $ git clone git://git.sv.gnu.org/gpsd.git   # git clone http://git.savannah.gnu.org/r/gpsd.git
    $ cd gpsd
    $ git tag
    $ git checkout release-3.16
