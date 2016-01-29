@@ -22,7 +22,7 @@ with shared memory support.
 Example
 =======
 
-The example below shows all attributes and typical values.
+The example below shows all attributes and typical values (of a stationary GPS, placed about one metre inside a window).
 
 .. code-block:: python
 
