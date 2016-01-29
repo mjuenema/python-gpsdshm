@@ -13,7 +13,7 @@ a single class ``GpsdShm`` that exposes the fields of the shared memory structur
 *python-gpsdshm* is implemented using Swig_ and requires the `gpsd` header files for compilation.
 
 Many Linux distributions ship the gpsd package **without** shared memory support.
-See `Compiling gpsd with shared memory support`_ for details how build gpsd
+See `Compiling gpsd with shared memory support`_ for details how to build gpsd
 with shared memory support.
 
 .. _`gpsd`: http://www.catb.org/gpsd/
