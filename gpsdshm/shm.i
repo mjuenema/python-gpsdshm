@@ -1,9 +1,8 @@
 %module "shm"
 
 %{
-#define SWIG_FILE_WITH_INIT
-#include <gps.h>
+#include "shm.h"
 %}
 
-%include <gps.h>
+%include 'shm.h"
 

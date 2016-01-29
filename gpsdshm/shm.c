@@ -10,25 +10,144 @@
 
 #include "shm.h"
 
-struct shmTime *shm_get() {
+struct shmexport_t *shm_get() {
     int shmid;
-    void *shm_time;
+    void *shm;
 
     // Try to create a new shared memory segment, in case gpsd has not started yet.
-    shmid = shmget((key_t)(NTPD_SHM_KEY+unit), sizeof(struct shmTime), IPC_CREAT | IPC_EXCL | 0400);
+    shmid = shmget((key_t)(GPSD_SHM_KEY), sizeof(struct shmexport_t), IPC_CREAT | IPC_EXCL | 0400);
     if (shmid < 0)
     {
         // Try to open an existing 
-        shmid = shmget((key_t)(NTPD_SHM_KEY+unit), 0, 0600);
+        shmid = shmget((key_t)(GPSD_SHM_KEY), 0, 0640);
         if (shmid < 0) {
             return NULL;
         }
     }
 
-    shm_time = (struct shmTime *)shmat(shmid, NULL, 0);
-    if (shm_time == (void *)(-1)) {
+    shm = (struct shmexport_t *)shmat(shmid, NULL, 0);
+    if (shm == (void *)(-1)) {
         return NULL;
     }
 
-    return shm_time;
+    return shm;
 }
+
+
+/* gps_fix_t */
+timestamp_t get_fix_time(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->time;
+}
+
+int get_fix_mode(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->mode;
+}
+
+double get_fix_ept(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->ept;
+}
+
+double get_fix_latitude(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->latitude;
+}
+
+double get_fix_epy(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->epy;
+}
+
+double get_fix_longitude(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->longitude;
+}
+
+double get_fix_epx(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->epx;
+}
+
+double get_fix_altitude(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->altitude;
+}
+
+double get_fix_epv(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->epv;
+}
+
+double get_fix_track(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->track;
+}
+
+double get_fix_epd(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->epd;
+}
+
+double get_fix_speed(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->speed;
+}
+
+double get_fix_eps(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->eps;
+}
+
+double get_fix_climb(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->climb;
+}
+
+double get_fix_epc(struct shmexport_t *shm) {
+    return shm->gpsdata->fix->epc;
+}
+
+
+/* dop_t */
+double get_dop_xdop(struct shmexport_t *shm) {
+    return shm->gpsdata->dop->xdop;
+}
+
+double get_dop_ydop(struct shmexport_t *shm) {
+    return shm->gpsdata->dop->ydop;
+}
+
+double get_dop_pdop(struct shmexport_t *shm) {
+    return shm->gpsdata->dop->;
+}
+
+double get_dop_hdop(struct shmexport_t *shm) {
+    return shm->gpsdata->dop->pdop;
+}
+
+double get_dop_vdop(struct shmexport_t *shm) {
+    return shm->gpsdata->dop->vdop;
+}
+
+double get_dop_tdop(struct shmexport_t *shm) {
+    return shm->gpsdata->dop->tdop;
+}
+
+double get_dop_gdop(struct shmexport_t *shm) {
+    return shm->gpsdata->dop->gdop;
+}
+
+
+/* gps_data_t */
+gps_mask_t get_set(struct shmexport_t *shm) {
+    return shm->gpsdata->set;
+}
+
+timestamp_t get_online(struct shmexport_t *shm) {
+    return shm->gpsdata->online;
+}
+
+int get_fd(struct shmexport_t *shm) {
+    return shm->gpsdata->fd;
+}
+
+int get_status(struct shmexport_t *shm) {
+    return shm->gpsdata->status;
+}
+
+timestamp_t get_skyview_time(struct shmexport_t *shm) {
+    return shm->gpsdata->skyview_time;
+}
+
+int get_satellites_visible(struct shmexport_t *shm) {
+    return shm->gpsdata->satellite_visible;
+}
+
