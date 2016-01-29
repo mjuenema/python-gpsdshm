@@ -12,21 +12,21 @@ class Fix(object):
     def __init__(self, shm):
         self.shm = shm
 
-    time = property(lambda self: gpsdshm.shm.get_time(self.shm))
-    mode = property(lambda self: gpsdshm.shm.get_mode(self.shm))
-    ept = property(lambda self: gpsdshm.shm.get_ept(self.shm))
-    latitude = property(lambda self: gpsdshm.shm.get_latitude(self.shm))
-    epy = property(lambda self: gpsdshm.shm.get_epy(self.shm))
-    longitude = property(lambda self: gpsdshm.shm.get_longitude(self.shm))
-    epx = property(lambda self: gpsdshm.shm.get_epx(self.shm))
-    altitude = property(lambda self: gpsdshm.shm.get_altitude(self.shm))
-    epv = property(lambda self: gpsdshm.shm.get_epv(self.shm))
-    track = property(lambda self: gpsdshm.shm.get_track(self.shm))
-    epd = property(lambda self: gpsdshm.shm.get_epd(self.shm))
-    speed = property(lambda self: gpsdshm.shm.get_speed(self.shm))
-    eps = property(lambda self: gpsdshm.shm.get_eps(self.shm))
-    climb = property(lambda self: gpsdshm.shm.get_climb(self.shm))
-    epc = property(lambda self: gpsdshm.shm.get_epc(self.shm))
+    time = property(lambda self: gpsdshm.shm.get_fix_time(self.shm))
+    mode = property(lambda self: gpsdshm.shm.get_fix_mode(self.shm))
+    ept = property(lambda self: gpsdshm.shm.get_fix_ept(self.shm))
+    latitude = property(lambda self: gpsdshm.shm.get_fix_latitude(self.shm))
+    epy = property(lambda self: gpsdshm.shm.get_fix_epy(self.shm))
+    longitude = property(lambda self: gpsdshm.shm.get_fix_longitude(self.shm))
+    epx = property(lambda self: gpsdshm.shm.get_fix_epx(self.shm))
+    altitude = property(lambda self: gpsdshm.shm.get_fix_altitude(self.shm))
+    epv = property(lambda self: gpsdshm.shm.get_fix_epv(self.shm))
+    track = property(lambda self: gpsdshm.shm.get_fix_track(self.shm))
+    epd = property(lambda self: gpsdshm.shm.get_fix_epd(self.shm))
+    speed = property(lambda self: gpsdshm.shm.get_fix_speed(self.shm))
+    eps = property(lambda self: gpsdshm.shm.get_fix_eps(self.shm))
+    climb = property(lambda self: gpsdshm.shm.get_fix_climb(self.shm))
+    epc = property(lambda self: gpsdshm.shm.get_fix_epc(self.shm))
 
 
 class Dop(object):
@@ -34,13 +34,13 @@ class Dop(object):
     def __init__(self, shm):
         self.shm = shm
 
-    xdop = property(lambda self: gpsdshm.shm.get_xdop(self.shm))
-    ydop = property(lambda self: gpsdshm.shm.get_ydop(self.shm))
-    pdop = property(lambda self: gpsdshm.shm.get_pdop(self.shm))
-    hdop = property(lambda self: gpsdshm.shm.get_hdop(self.shm))
-    vdop = property(lambda self: gpsdshm.shm.get_vdop(self.shm))
-    tdop = property(lambda self: gpsdshm.shm.get_tdop(self.shm))
-    gdop = property(lambda self: gpsdshm.shm.get_gdop(self.shm))
+    xdop = property(lambda self: gpsdshm.shm.get_dop_xdop(self.shm))
+    ydop = property(lambda self: gpsdshm.shm.get_dop_ydop(self.shm))
+    pdop = property(lambda self: gpsdshm.shm.get_dop_pdop(self.shm))
+    hdop = property(lambda self: gpsdshm.shm.get_dop_hdop(self.shm))
+    vdop = property(lambda self: gpsdshm.shm.get_dop_vdop(self.shm))
+    tdop = property(lambda self: gpsdshm.shm.get_dop_tdop(self.shm))
+    gdop = property(lambda self: gpsdshm.shm.get_dop_gdop(self.shm))
 
 
 class Satellite(object):
@@ -91,8 +91,8 @@ class Shm(object):
     def __init__(self):
 
         self.shm = gpsdshm.shm.shm_get()
-        if self.shm is None:
-            raise OSError('Unable to attach to GPSd shared memory')
+        if self.shm < 0:
+            raise OSError('GPSd shared memory error %d' % (self.sh))
 
         self.fix = Fix(self.shm)
         self.dop = Dop(self.shm)

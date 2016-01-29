@@ -32,15 +32,15 @@ struct shmexport_t *shm_get() {
     if (shmid < 0)
     {
         // Try to open an existing 
-        shmid = shmget((key_t)(GPSD_SHM_KEY), 0, 0640);
+        shmid = shmget((key_t)(GPSD_SHM_KEY), 0, 0400);
         if (shmid < 0) {
-            return NULL;
+            return shmid;
         }
     }
 
-    shm = (struct shmexport_t *)shmat(shmid, NULL, 0);
+    shm = (struct shmexport_t *)shmat(shmid, NULL, SHM_RDONLY);
     if (shm == (void *)(-1)) {
-        return NULL;
+        return -1;
     }
 
     return shm;

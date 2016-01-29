@@ -10,29 +10,29 @@ Markus Juenemann, 29-Jan-2016
 
 """
 
+import sys
 
 from nose.tools import *
 
 import gpsdshm
 
+shm = None
 
-# ===================================================================
-# ======= Replace the stuff below with the tests for gpsdshm ========
-# ===================================================================
 
-#def setup():
-#    sys.stderr.write('Testing, whether ntpd is accessing the shared memory... ')
-#    for unit in [0, 1, 2, 3]:
-#        shm = ntpdshm.NtpdShm(unit)
-#
-#        count1 = copy.copy(shm.count)
-#        time.sleep(1.2)
-#        count2 = copy.copy(shm.count)
-#
-#        if count1 != count2:
-#            raise EnvironmentError("don't run the tests while ntpd is accessing the shared memory\n")
-#
-#    sys.stderr.write('no\n')
+def setup():
+    global shm
+
+    shm = gpsdshm.Shm()
+
+    if shm.fix.latitude <> 0.0:
+        sys.stderr.write('Using real gpsd data for tests...\n')
+    else:
+        sys.stderr.write('Using mock gpsd data for tests...\n')
+
+
+def test_gpsdshm():
+
+    assert 
 
 
 class NtpdShmTests(object):

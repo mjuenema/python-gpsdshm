@@ -80,3 +80,13 @@ Compiling gpsd with shared memory support
    $ git checkout release-3.16
    $ scons prefix=/usr/local shm_export=yes
    $ sudo scons install
+   
+Then run start gpsd and check whether the shared segment has been created. 
+
+.. code-block:: console
+
+   $ sudo /usr/local/sbin/gpsd -n /dev/ttyAMA0
+   $ ipcs -m | grep 0x47505344
+   ------ Shared Memory Segments --------
+   key        shmid      owner      perms      bytes      nattch     status  
+   0x47505344 163844     root       666        31616      1
