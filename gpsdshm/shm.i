@@ -4,5 +4,5 @@
 #include "shm.h"
 %}
 
-%include 'shm.h"
+%include "shm.h"
 
