@@ -47,12 +47,12 @@ class Satellite(object):
     def __init__(self, ss, used, prn, elevation, azimuth):
         self.ss = self.snr = ss
         self.used = used and True
-        self.prn = prn
+        self.prn = self.PRN = prn
         self.elevation = elevation
         self.azimuth = azimuth
 
 
-class Skyview(object):
+class Satellites(object):
     """List of `GpsdShmSatellite` instances.
 
     """
@@ -61,7 +61,17 @@ class Skyview(object):
         self.shm = shm
 
     def __getitem__(self, index):
-        return None
+
+        if index > gpsdshm.shm.MAXCHANNELS-1:
+            raise IndexError
+
+        ss = gpsdshm.shm.get_satellite_ss(self.shm, index)
+        used = gpsdshm.shm.get_satellite_used(self.shm, index) == True
+        prn = gpsdshm.shm.get_satellite_prn(self.shm, index)
+        elevation = gpsdshm.shm.get_satellite_elevation(self.shm, index)
+        azimuth = gpsdshm.shm.get_satellite_azimuth(self.shm, index)
+
+        return Satellite(ss, used, prn, elevation, azimuth)
 
 
 class Device(object):
@@ -96,7 +106,7 @@ class Shm(object):
 
         self.fix = Fix(self.shm)
         self.dop = Dop(self.shm)
-        self.skyview = Skyview(self.shm)
+        self.satellites = Satellites(self.shm)
         self.devices = Devices(self.shm)
 
 

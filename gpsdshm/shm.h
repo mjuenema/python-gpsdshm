@@ -36,3 +36,10 @@ timestamp_t get_online(struct shmexport_t *shm);
 int get_status(struct shmexport_t *shm);
 timestamp_t get_skyview_time(struct shmexport_t *shm);
 int get_satellites_visible(struct shmexport_t *shm);
+
+/* gps_satellite_t */
+double get_satellite_ss(struct shmexport_t *shm, unsigned int index);
+int get_satellite_used(struct shmexport_t *shm, unsigned int index);
+int get_satellite_prn(struct shmexport_t *shm, unsigned int index);
+int get_satellite_elevation(struct shmexport_t *shm, unsigned int index);
+int get_satellite_azimuth(struct shmexport_t *shm, unsigned int index);

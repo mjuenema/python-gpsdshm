@@ -10,6 +10,10 @@
 
 #include "shm.h"
 
+#if GPSD_API_MAJOR_VERSION < 5
+#error "gpsd versions earlier than 2.9.6 are not supported"
+#endif
+
 /* The following definitions are in gpsd.h
  * of the gpsd sources but the header file 
  * is not installed through 'scons install'.
@@ -160,3 +164,49 @@ int get_satellites_visible(struct shmexport_t *shm) {
     return shm->gpsdata.satellites_visible;
 }
 
+
+/* satellite_t */
+double get_satellite_ss(struct shmexport_t *shm, unsigned int index)  {
+#if GPSD_API_MAJOR_VERSION == 5
+    return shm->gpsdata.ss[index];
+#endif
+#if GPSD_API_MAJOR_VERSION == 6
+    return shm->gpsdata.skyview[index].ss;
+#endif
+}
+
+int get_satellite_used(struct shmexport_t *shm, unsigned int index)  {
+#if GPSD_API_MAJOR_VERSION == 5
+    return shm->gpsdata.used[index];
+#endif
+#if GPSD_API_MAJOR_VERSION == 6
+    return shm->gpsdata.skyview[index].used;
+#endif
+}
+
+int get_satellite_prn(struct shmexport_t *shm, unsigned int index)  {
+#if GPSD_API_MAJOR_VERSION == 5
+    return shm->gpsdata.PRN[index];
+#endif
+#if GPSD_API_MAJOR_VERSION == 6
+    return shm->gpsdata.skyview[index].PRN;
+#endif
+}
+
+int get_satellite_elevation(struct shmexport_t *shm, unsigned int index)  {
+#if GPSD_API_MAJOR_VERSION == 5
+    return shm->gpsdata.elevation[index];
+#endif
+#if GPSD_API_MAJOR_VERSION == 6
+    return shm->gpsdata.skyview[index].elevation;
+#endif
+}
+
+int get_satellite_azimuth(struct shmexport_t *shm, unsigned int index)  {
+#if GPSD_API_MAJOR_VERSION == 5
+    return shm->gpsdata.azimuth[index];
+#endif
+#if GPSD_API_MAJOR_VERSION == 6
+    return shm->gpsdata.skyview[index].azimuth;
+#endif
+}

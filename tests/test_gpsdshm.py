@@ -45,12 +45,12 @@ def test_gpsdshm():
     now = time.time()
 
     assert isinstance(gpsd_shm.online, types.FloatType)
-    assert now-1 < gpsd_shm.online < now+1
+    assert now-2 < gpsd_shm.online < now+2
 
     assert gpsd_shm.status is True
 
     assert isinstance(gpsd_shm.skyview_time, types.FloatType)
-    assert now-1 < gpsd_shm.skyview_time < now+1 or math.isnan(gpsd_shm.skyview_time)
+    assert now-2 < gpsd_shm.skyview_time < now+2 or math.isnan(gpsd_shm.skyview_time)
 
     assert isinstance(gpsd_shm.satellites_visible, types.IntType)
     assert 0 < gpsd_shm.satellites_visible < 73
@@ -100,22 +100,40 @@ def test_gpsdshm():
     assert -100.0 < gpsd_shm.fix.epc < 100.0 or math.isnan(gpsd_shm.fix.epc)
 
     assert isinstance(gpsd_shm.dop.xdop, types.FloatType)
-    assert 0.0 < gpsd_shm.dop.xdop < 2.0
+    assert 0.0 < gpsd_shm.dop.xdop < 3.0
 
     assert isinstance(gpsd_shm.dop.ydop, types.FloatType)
-    assert 0.0 < gpsd_shm.dop.ydop < 2.0
+    assert 0.0 < gpsd_shm.dop.ydop < 3.0
 
     assert isinstance(gpsd_shm.dop.pdop, types.FloatType)
-    assert 0.0 < gpsd_shm.dop.pdop < 2.0
+    assert 0.0 < gpsd_shm.dop.pdop < 3.0
 
     assert isinstance(gpsd_shm.dop.hdop, types.FloatType)
-    assert 0.0 < gpsd_shm.dop.hdop < 2.0
+    assert 0.0 < gpsd_shm.dop.hdop < 3.0
 
     assert isinstance(gpsd_shm.dop.vdop, types.FloatType)
-    assert 0.0 < gpsd_shm.dop.vdop < 2.0
+    assert 0.0 < gpsd_shm.dop.vdop < 3.0
 
     assert isinstance(gpsd_shm.dop.tdop, types.FloatType)
-    assert 0.0 < gpsd_shm.dop.tdop < 2.0
+    assert 0.0 < gpsd_shm.dop.tdop < 3.0
 
     assert isinstance(gpsd_shm.dop.gdop, types.FloatType)
     assert 0.0 < gpsd_shm.dop.gdop < 3.0
+
+    for i in range(gpsdshm.shm.MAXCHANNELS):
+        assert isinstance(gpsd_shm.satellites[i].ss, types.FloatType)
+        assert 0.0 <= gpsd_shm.satellites[i].ss < 50.
+
+        assert isinstance(gpsd_shm.satellites[i].used, types.BooleanType)
+
+        assert isinstance(gpsd_shm.satellites[i].prn, types.IntType)
+        assert 0 <= gpsd_shm.satellites[i].prn
+
+        assert isinstance(gpsd_shm.satellites[i].PRN, types.IntType)
+        assert gpsd_shm.satellites[i].prn == gpsd_shm.satellites[i].PRN
+
+        assert isinstance(gpsd_shm.satellites[i].elevation, types.IntType)
+        assert 0 <= gpsd_shm.satellites[i].elevation <= 90
+
+        assert isinstance(gpsd_shm.satellites[i].azimuth, types.IntType)
+        assert 0 <= gpsd_shm.satellites[i].azimuth , 360.0

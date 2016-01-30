@@ -8,7 +8,9 @@ Overview
 ========
 
 *python-gpsdshm* provides a read-only(!) Python interface to `gpsd`_'s shared memory. It provides
-a single class ``GpsdShm`` that exposes the fields of the shared memory structure as attributes.
+a single class ``GpsdShm`` that exposes the fields of the shared memory structure as attributes. The
+*python-gpsdshm* API is (loosely) modelled on gpsd version 3.16 (API 6.1). gpsd releases earlier
+than 2.96 are not supported.
 
 *python-gpsdshm* is implemented using Swig_ and requires the `gpsd` header files for compilation.
 
@@ -84,16 +86,20 @@ The example below shows all attributes and typical values (of a stationary GPS, 
    >>> gpsd_shm.dop.gdop
    2.4342743978108503
 
-Information about satellites is contained in the ``skyview`` list.
+Information about satellites is contained in the ``satellites`` list.
    
 .. code-block:: python
    
-   >>> gpsd_shm.skyview[0].ss         # Signal-to-noise ratio (dB)
-   >>> gpsd_shm.skyview[0].used       # Used in solution?
-   >>> gpsd_shm.skyview[0].prn        # PRNs of satellite
-   >>> gpsd_shm.skyview[0].elevation  # Elevation of satellite, degrees
-   >>> gpsd_shm.skyview[0].azimuth    # Azimuth, degrees
-
+   >>> gpsd_shm.satellites[0].ss         # Signal-to-noise ratio (dB)
+   16.0
+   >>> gpsd_shm.satellites[0].used       # Used in solution?
+   False
+   >>> gpsd_shm.satellites[0].prn        # PRNs of satellite
+   6
+   >>> gpsd_shm.satellites[0].elevation  # Elevation of satellite, degrees
+   56
+   >>> gpsd_shm.satellites[0].azimuth    # Azimuth, degrees
+   59
 
 
 Compiling gpsd with shared memory support
