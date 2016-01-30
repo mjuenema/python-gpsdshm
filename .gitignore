@@ -60,3 +60,8 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+gpsdshm/shm.o
+gpsdshm/shm.py
+gpsdshm/shm_wrap.c
+gpsdshm/shm_wrap.o
