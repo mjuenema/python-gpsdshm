@@ -1,0 +1,11 @@
+
+The private/ folder contains various stuff that I use
+when developing and testing python-gpsdshm. It's called
+private because most of it is very specific to my setup
+and probably won't make much sense anywhere else. 
+
+You are welcome to use anything you find here but it will
+be completely unsupported. It may even stuff up your 
+computer. 
+
+Markus Juenemann, 03-Feb-2016
