@@ -31,7 +31,7 @@ double get_dop_tdop(struct shmexport_t *shm);
 double get_dop_gdop(struct shmexport_t *shm);
 
 /* gps_data_t */
-gps_mask_t get_set(struct shmexport_t *shm);
+//gps_mask_t get_set(struct shmexport_t *shm);
 timestamp_t get_online(struct shmexport_t *shm);
 int get_status(struct shmexport_t *shm);
 timestamp_t get_skyview_time(struct shmexport_t *shm);
