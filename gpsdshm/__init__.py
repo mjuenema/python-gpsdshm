@@ -101,8 +101,8 @@ class Shm(object):
     def __init__(self):
 
         self.shm = gpsdshm.shm.shm_get()
-        if self.shm < 0:
-            raise OSError('GPSd shared memory error %d' % (self.shm))
+        if self.shm == None:
+            raise OSError('GPSd shared memory error: %s' % (self.shm, gpsdshm._error))
 
         self.fix = Fix(self.shm)
         self.dop = Dop(self.shm)

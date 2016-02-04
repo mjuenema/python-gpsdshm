@@ -38,8 +38,8 @@ def setup():
         sys.stderr.write('Using real gpsd data for tests...\n')
     else:
         sys.stderr.write('Using mock gpsd data for tests...\n')
-        import tests.mock
-        gpsd_shm = tests.mock.MockShm()
+        import _mock
+        gpsd_shm = _mock.MockShm()
 
 
 def test_gpsdshm():
