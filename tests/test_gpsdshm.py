@@ -34,7 +34,7 @@ def setup():
 
     gpsd_shm = gpsdshm.Shm()
 
-    if gpsd_shm.fix.latitude <> 0.0:
+    if gpsd_shm.fix.latitude != 0.0:
         sys.stderr.write('Using real gpsd data for tests...\n')
     else:
         sys.stderr.write('Using mock gpsd data for tests...\n')
