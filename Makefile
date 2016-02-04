@@ -34,31 +34,31 @@ register:
 #  
 # build
 #
-build_ext: clean swig
+build_ext: swig
 	python setup.py build_ext
 	python setup.py build_ext --inplace
 
-build_ext26: clean swig
+build_ext26: swig
 	python2.6 setup.py build_ext
 	python2.6 setup.py build_ext --inplace
 
-build_ext27: clean swig
+build_ext27: swig
 	python2.7 setup.py build_ext
 	python2.7 setup.py build_ext --inplace
 
-build_ext33: clean swig
+build_ext33: swig
 	python3.3 setup.py build_ext
 	python3.3 setup.py build_ext --inplace
 
-build_ext34: clean swig
+build_ext34: swig
 	python3.4 setup.py build_ext
 	python3.4 setup.py build_ext --inplace
 
-build_ext35: clean swig
+build_ext35: swig
 	python3.5 setup.py build_ext
 	python3.5 setup.py build_ext --inplace
 
-swig: clean
+swig: clean-build
 	( cd $(NAME) ; swig -python shm.i )
 
 
@@ -98,15 +98,13 @@ lint: swig
 # clean
 #
 clean: clean-build clean-pyc clean-test
-	rm -fv $(NAME)/__init__.pyc
+
+clean-build:
 	rm -fv $(NAME)/shm.o
 	rm -fv $(NAME)/shm.py
-	rm -fv $(NAME)/shm.pyc
 	rm -fv $(NAME)/_shm.so
 	rm -fv $(NAME)/shm_wrap.c
 	rm -fv $(NAME)/shm_wrap.o
-
-clean-build:
 	rm -fr build/
 	rm -fr dist/
 	rm -fr *.egg-info
