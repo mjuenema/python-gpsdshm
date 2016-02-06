@@ -24,7 +24,6 @@ import math
 
 import gpsdshm
 import time
-import types
 
 gpsd_shm = None
 
@@ -46,96 +45,96 @@ def test_gpsdshm():
 
     now = time.time()
 
-    assert isinstance(gpsd_shm.online, types.FloatType)
+    assert isinstance(gpsd_shm.online, (float))
     assert now-2 < gpsd_shm.online < now+2
 
     assert gpsd_shm.status is True
 
-    assert isinstance(gpsd_shm.skyview_time, types.FloatType)
+    assert isinstance(gpsd_shm.skyview_time, (float))
     assert now-2 < gpsd_shm.skyview_time < now+2 or math.isnan(gpsd_shm.skyview_time)
 
-    assert isinstance(gpsd_shm.satellites_visible, types.IntType)
+    assert isinstance(gpsd_shm.satellites_visible, (int))
     assert 0 < gpsd_shm.satellites_visible < 73
 
-    assert isinstance(gpsd_shm.fix.time, types.FloatType)
+    assert isinstance(gpsd_shm.fix.time, (float))
     assert now-2 < gpsd_shm.fix.time < now+2
 
     assert gpsd_shm.fix.mode in [2,3]
 
-    assert isinstance(gpsd_shm.fix.ept, types.FloatType)
+    assert isinstance(gpsd_shm.fix.ept, (float))
     assert 0.0 < gpsd_shm.fix.ept < 0.1
 
-    assert isinstance(gpsd_shm.fix.latitude, types.FloatType)
+    assert isinstance(gpsd_shm.fix.latitude, (float))
     assert -90.0 < gpsd_shm.fix.latitude < 90.0
 
-    assert isinstance(gpsd_shm.fix.epy, types.FloatType)
+    assert isinstance(gpsd_shm.fix.epy, (float))
     assert 1.0 < gpsd_shm.fix.epy < 100.0
 
-    assert isinstance(gpsd_shm.fix.longitude, types.FloatType)
+    assert isinstance(gpsd_shm.fix.longitude, (float))
     assert -180.0 < gpsd_shm.fix.longitude < 180.0
 
-    assert isinstance(gpsd_shm.fix.epx, types.FloatType)
+    assert isinstance(gpsd_shm.fix.epx, (float))
     assert 1.0 < gpsd_shm.fix.epx < 100.0
 
-    assert isinstance(gpsd_shm.fix.altitude, types.FloatType)
+    assert isinstance(gpsd_shm.fix.altitude, (float))
     assert -100.0 < gpsd_shm.fix.altitude < 12000.0
 
-    assert isinstance(gpsd_shm.fix.epv, types.FloatType)
+    assert isinstance(gpsd_shm.fix.epv, (float))
     assert 1.0 < gpsd_shm.fix.epv < 100.0
 
-    assert isinstance(gpsd_shm.fix.track, types.FloatType)
+    assert isinstance(gpsd_shm.fix.track, (float))
     assert 0.0 <= gpsd_shm.fix.track <= 365.0
 
-    assert isinstance(gpsd_shm.fix.epd, types.FloatType)
+    assert isinstance(gpsd_shm.fix.epd, (float))
     assert 0.0 <= gpsd_shm.fix.epd <= 365 or math.isnan(gpsd_shm.fix.epd)
 
-    assert isinstance(gpsd_shm.fix.speed, types.FloatType)
+    assert isinstance(gpsd_shm.fix.speed, (float))
     assert 0.0 <= gpsd_shm.fix.speed <= 343.0
 
-    assert isinstance(gpsd_shm.fix.eps, types.FloatType)
+    assert isinstance(gpsd_shm.fix.eps, (float))
     assert 0.0 <= gpsd_shm.fix.eps <= 343.0
 
-    assert isinstance(gpsd_shm.fix.climb, types.FloatType)
+    assert isinstance(gpsd_shm.fix.climb, (float))
     assert -100.0 < gpsd_shm.fix.climb < 100.0
 
-    assert isinstance(gpsd_shm.fix.epc, types.FloatType)
+    assert isinstance(gpsd_shm.fix.epc, (float))
     assert -100.0 < gpsd_shm.fix.epc < 100.0 or math.isnan(gpsd_shm.fix.epc)
 
-    assert isinstance(gpsd_shm.dop.xdop, types.FloatType)
+    assert isinstance(gpsd_shm.dop.xdop, (float))
     assert 0.0 < gpsd_shm.dop.xdop < 3.0
 
-    assert isinstance(gpsd_shm.dop.ydop, types.FloatType)
+    assert isinstance(gpsd_shm.dop.ydop, (float))
     assert 0.0 < gpsd_shm.dop.ydop < 3.0
 
-    assert isinstance(gpsd_shm.dop.pdop, types.FloatType)
+    assert isinstance(gpsd_shm.dop.pdop, (float))
     assert 0.0 < gpsd_shm.dop.pdop < 3.0
 
-    assert isinstance(gpsd_shm.dop.hdop, types.FloatType)
+    assert isinstance(gpsd_shm.dop.hdop, (float))
     assert 0.0 < gpsd_shm.dop.hdop < 3.0
 
-    assert isinstance(gpsd_shm.dop.vdop, types.FloatType)
+    assert isinstance(gpsd_shm.dop.vdop, (float))
     assert 0.0 < gpsd_shm.dop.vdop < 3.0
 
-    assert isinstance(gpsd_shm.dop.tdop, types.FloatType)
+    assert isinstance(gpsd_shm.dop.tdop, (float))
     assert 0.0 < gpsd_shm.dop.tdop < 3.0
 
-    assert isinstance(gpsd_shm.dop.gdop, types.FloatType)
+    assert isinstance(gpsd_shm.dop.gdop, (float))
     assert 0.0 < gpsd_shm.dop.gdop < 3.0
 
     for i in range(gpsdshm.shm.MAXCHANNELS):
-        assert isinstance(gpsd_shm.satellites[i].ss, types.FloatType)
+        assert isinstance(gpsd_shm.satellites[i].ss, (float))
         assert 0.0 <= gpsd_shm.satellites[i].ss < 50.
 
-        assert isinstance(gpsd_shm.satellites[i].used, types.BooleanType)
+        assert isinstance(gpsd_shm.satellites[i].used, BooleanType)
 
-        assert isinstance(gpsd_shm.satellites[i].prn, types.IntType)
+        assert isinstance(gpsd_shm.satellites[i].prn, (int))
         assert 0 <= gpsd_shm.satellites[i].prn
 
-        assert isinstance(gpsd_shm.satellites[i].PRN, types.IntType)
+        assert isinstance(gpsd_shm.satellites[i].PRN, (int))
         assert gpsd_shm.satellites[i].prn == gpsd_shm.satellites[i].PRN
 
-        assert isinstance(gpsd_shm.satellites[i].elevation, types.IntType)
+        assert isinstance(gpsd_shm.satellites[i].elevation, (int))
         assert 0 <= gpsd_shm.satellites[i].elevation <= 90
 
-        assert isinstance(gpsd_shm.satellites[i].azimuth, types.IntType)
+        assert isinstance(gpsd_shm.satellites[i].azimuth, (int))
         assert 0 <= gpsd_shm.satellites[i].azimuth , 360.0

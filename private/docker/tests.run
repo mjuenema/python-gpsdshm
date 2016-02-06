@@ -1,7 +1,29 @@
 #!/bin/sh
 
-BRANCH=develop
+#
+# Run tests inside Docker container
+#
+# Markus Juenemann, 06-feb-2016
 
-cd 
+GPSD_VERSION=`cat /gpsd.release | cut -d- -f 2`
 
+run() {
+    # $1 = gpsd version (3.x)
+    # $2 = gpsdshm branch
+    # $3 = Python version (2.x, 3.x)
+
+    git checkout $2
+
+    make tox`echo $3 | sed 's/[^0-9]//g'`
+
+    echo $? > /workdir/$1_$2_$3.result
+}
+
+cd /tmp/python-gpsdshm
+
+for gpsdshm_branch in master develop `git tag`; do
+    for python_version in 2.6 2.7 3.3 3.4 3.5; do
+        run $GPSD_VERSION $gpsdshm_branch $python_version
+    done
+done
 

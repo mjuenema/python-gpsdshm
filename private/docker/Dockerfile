@@ -18,7 +18,8 @@ RUN yum clean all
 #
 RUN pip2.7 install SCons
 
-RUN yum -y install python-devel chrpath automake pcre-devel bison byacc gcc-c++
+RUN yum -y install python-devel chrpath automake pcre-devel \
+           bison byacc gcc-c++ libxslt xmlto
 
 RUN cd /tmp && \
     git clone https://github.com/swig/swig.git && \
@@ -29,11 +30,11 @@ RUN cd /tmp && \
     make && \
     make install
 
-RUN cd /tmp && git clone https://git.savannah.gnu.org/r/gpsd.git && \
+RUN cd /tmp && git clone http://git.savannah.gnu.org/r/gpsd.git && \
     cd gpsd && \
     git checkout $RELEASE && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=True python=False leapfetch=False manbuild=False && \
+    python2.7 /usr/local/bin/scons shm_export=True python=False leapfetch=False && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd /tmp && git clone https://github.com/mjuenema/python-gpsdshm.git
@@ -42,7 +43,9 @@ RUN echo $RELEASE > /gpsd.release
 
 VOLUME workdir /workdir
 
-CMD /bin/bash
+COPY tests.run /run_tests.sh
+
+CMD /run_tests.sh
 
 # Undo yum proxy
 #

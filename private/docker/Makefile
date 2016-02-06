@@ -3,64 +3,53 @@
 all: help
 
 help:
-	@echo "make build            - Build all Docker images"
+	@echo "make -k build         - Build all Docker images"
+	@echo "make -k test          - Start all Docker images and run tests"
 	@echo "make clean_failed     - Delete failed Docker containers"
 	@echo "make clean_dangling   - Delete dangling Docker images"
 
-build: 3.0 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 3.9 3.10 3.11 3.12 3.13 3.14 3.15 3.16
+build: build_3.0 \
+       build_3.1 \
+       build_3.2 \
+       build_3.3 \
+       build_3.4 \
+       build_3.5 \
+       build_3.6 \
+       build_3.7 \
+       build_3.8 \
+       build_3.9 \
+       build_3.10 \
+       build_3.11 \
+       build_3.12 \
+       build_3.13 \
+       build_3.14 \
+       build_3.15 \
+       build_3.16
 
-3.%: Dockerfile
-	docker build --build-arg RELEASE=release-$@ --build-arg http_proxy=$(http_proxy) \
-	             --build-arg https_proxy=$(https_proxy) -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
+test: test_3.0 \
+      test_3.1 \
+      test_3.2 \
+      test_3.3 \
+      test_3.4 \
+      test_3.5 \
+      test_3.6 \
+      test_3.7 \
+      test_3.8 \
+      test_3.9 \
+      test_3.10 \
+      test_3.11 \
+      test_3.12 \
+      test_3.13 \
+      test_3.14 \
+      test_3.15 \
+      test_3.16
 
-#3.1: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.2: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.3: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.4: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.5: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.6: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.7: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.8: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.9: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.10: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.10: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.10: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.10: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.10: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.10: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
-#
-#3.10: Dockerfile
-#	docker build --build-arg RELEASE=release-$@ -t mjuenema/pythons-gpsd-release-$@-gpsdshm .
+build_3.%: Dockerfile
+	docker build --build-arg RELEASE=release-$(subst build_,,$@) --build-arg http_proxy=$(http_proxy) \
+	             --build-arg https_proxy=$(https_proxy) -t mjuenema/pythons-gpsd-release-$(subst build_,,$@)-gpsdshm .
 
+test_3.%: build_3.%
+	docker run --rm -v `pwd`/workdir:/workdir mjuenema/pythons-gpsd-release-$(subst test_,,$@)-gpsdshm
 
 
 .PHONY: Dockerfile
