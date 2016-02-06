@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 NAME = 'gpsdshm'
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 LICENSE = 'BSD License'
 AUTHOR = 'Markus Juenemann'
 EMAIL = 'markus@juenemann.net'

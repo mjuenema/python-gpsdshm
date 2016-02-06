@@ -2,8 +2,6 @@
 python-gpsdshm
 **************
 
-**This project has not released any code yet!**
-
 Overview
 ========
 
