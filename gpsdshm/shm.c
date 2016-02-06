@@ -36,11 +36,11 @@ struct shmexport_t *shm_get() {
     void *shm;
 
     // Try to create a new shared memory segment, in case gpsd has not started yet.
-    shmid = shmget((key_t)(GPSD_SHM_KEY), sizeof(struct shmexport_t), IPC_CREAT | IPC_EXCL | 0400);
+    shmid = shmget((key_t)(GPSD_SHM_KEY), sizeof(struct shmexport_t), IPC_CREAT | IPC_EXCL | 0666);
     if (shmid < 0)
     {
         // Try to open an existing 
-        shmid = shmget((key_t)(GPSD_SHM_KEY), 0, 0400);
+        shmid = shmget((key_t)(GPSD_SHM_KEY), 0, 0666);
         if (shmid < 0) {
             _error = strerror(errno);
             return NULL;
