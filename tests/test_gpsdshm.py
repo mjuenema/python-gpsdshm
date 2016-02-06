@@ -125,7 +125,7 @@ def test_gpsdshm():
         assert isinstance(gpsd_shm.satellites[i].ss, (float))
         assert 0.0 <= gpsd_shm.satellites[i].ss < 50.
 
-        assert isinstance(gpsd_shm.satellites[i].used, BooleanType)
+        assert isinstance(gpsd_shm.satellites[i].used, (bool))
 
         assert isinstance(gpsd_shm.satellites[i].prn, (int))
         assert 0 <= gpsd_shm.satellites[i].prn

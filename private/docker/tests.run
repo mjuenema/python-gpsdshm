@@ -14,6 +14,8 @@ run() {
 
     git checkout $2
 
+    git pull origin $2
+
     make tox`echo $3 | sed 's/[^0-9]//g'`
 
     echo $? > /workdir/$1_$2_$3.result
