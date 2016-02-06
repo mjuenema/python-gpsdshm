@@ -45,7 +45,7 @@ setup(
         'Natural Language :: English',
         'Operating System :: Unix',
         'Topic :: Software Development :: Libraries',
-        'Programming Language :: Python :: C',
+        'Programming Language :: C',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 2.6',

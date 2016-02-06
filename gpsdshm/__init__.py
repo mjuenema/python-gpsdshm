@@ -3,7 +3,6 @@ Python interface to GPSd Shared Memory.
 
 """
 
-import time 
 import gpsdshm.shm
 
 
