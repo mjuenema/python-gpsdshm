@@ -6,6 +6,7 @@ Markus Juenemann, 04-Feb-2016
 """
 
 import time
+from gpsdshm.shm import MAXCHANNELS
 
 class MockFix(object):
     def __init__(self):
@@ -17,13 +18,13 @@ class MockFix(object):
         self.longitude = 143.99911
         self.epx = 10.040781879264545
         self.altitude = 68.2
-        self.fix.epv = 19.55
+        self.epv = 19.55
         self.track = 44.45
-        self.epd = int('nan')
+        self.epd = float('nan')
         self.speed = 0.3446777748
         self.eps = 29.707764044513397
         self.climb = 0.0
-        self.epc = int('nan')
+        self.epc = float('nan')
 
 
 class MockDop(object):
@@ -35,6 +36,15 @@ class MockDop(object):
         self.vdop = 0.82
         self.tdop = 1.2548625723457216
         self.gdop = 2.4342743978108503
+
+
+class MockSatellite(object):
+    def __init__(self, prn):
+        self.ss = 0.0 
+        self.prn = self.PRN = prn
+        self.used = True
+        self.elevation = prn
+        self.azimuth = prn
         
 
 class MockShm(object):
@@ -43,8 +53,10 @@ class MockShm(object):
         self.online = time.time()
         self.status = True
         self.fix_time = time.time()
+        self.satellites_visible = 8
         self.fix = MockFix()
         self.dop = MockDop()
-        
-    
+        self.skyview_time = float('nan')
+        self.satellites = [MockSatellite(prn) for prn in range(MAXCHANNELS)]
+         
     

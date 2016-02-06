@@ -1,0 +1,8 @@
+private/docker/README
+=====================
+
+The files in this directory are used to create Docker
+containers for testing python-gspdshm against different
+gpsd releases and Python versions.
+
+Markus Juenemann, 04-Feb-2016

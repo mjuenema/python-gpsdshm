@@ -3,7 +3,6 @@ Python interface to GPSd Shared Memory.
 
 """
 
-import time 
 import gpsdshm.shm
 
 
@@ -101,8 +100,8 @@ class Shm(object):
     def __init__(self):
 
         self.shm = gpsdshm.shm.shm_get()
-        if self.shm < 0:
-            raise OSError('GPSd shared memory error %d' % (self.shm))
+        if self.shm == None:
+            raise OSError('GPSd shared memory error: %s' % (self.shm, gpsdshm._error))
 
         self.fix = Fix(self.shm)
         self.dop = Dop(self.shm)
@@ -113,7 +112,7 @@ class Shm(object):
     set = property(lambda self: gpsdshm.shm.get_set(self.shm))
     online = property(lambda self: gpsdshm.shm.get_online(self.shm))
     fd = property(lambda self: gpsdshm.shm.get_fd(self.shm))
-    status = property(lambda self: gpsdshm.shm.get_status(self.shm) == True)
+    status = property(lambda self: gpsdshm.shm.get_status(self.shm) != 0)
     dev = device = property(lambda self: gpsdshm.shm.get_dev(self.shm))
     skyview_time = property(lambda self: gpsdshm.shm.get_skyview_time(self.shm))
     satellites_visible = property(lambda self: gpsdshm.shm.get_satellites_visible(self.shm))

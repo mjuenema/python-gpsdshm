@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
@@ -27,24 +28,29 @@ struct shmexport_t
 };
 
 
+char *_error = NULL;
+
+
 struct shmexport_t *shm_get() {
     int shmid;
     void *shm;
 
     // Try to create a new shared memory segment, in case gpsd has not started yet.
-    shmid = shmget((key_t)(GPSD_SHM_KEY), sizeof(struct shmexport_t), IPC_CREAT | IPC_EXCL | 0400);
+    shmid = shmget((key_t)(GPSD_SHM_KEY), sizeof(struct shmexport_t), IPC_CREAT | IPC_EXCL | 0666);
     if (shmid < 0)
     {
         // Try to open an existing 
-        shmid = shmget((key_t)(GPSD_SHM_KEY), 0, 0400);
+        shmid = shmget((key_t)(GPSD_SHM_KEY), 0, 0666);
         if (shmid < 0) {
-            return shmid;
+            _error = strerror(errno);
+            return NULL;
         }
     }
 
     shm = (struct shmexport_t *)shmat(shmid, NULL, SHM_RDONLY);
     if (shm == (void *)(-1)) {
-        return -1;
+        _error = strerror(errno);
+        return NULL;
     }
 
     return shm;
@@ -144,9 +150,9 @@ double get_dop_gdop(struct shmexport_t *shm) {
 
 
 /* gps_data_t */
-gps_mask_t get_set(struct shmexport_t *shm) {
-    return shm->gpsdata.set;
-}
+//gps_mask_t get_set(struct shmexport_t *shm) {
+//    return shm->gpsdata.set;
+//}
 
 timestamp_t get_online(struct shmexport_t *shm) {
     return shm->gpsdata.online;
