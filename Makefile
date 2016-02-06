@@ -3,8 +3,31 @@ NAME := gpsdshm
 all: help
 
 help:
-	@echo "TODO"
-	exit 1
+	@echo "PACKAGING"
+	@echo "make sdist"
+	@echo "make bdist"
+	@echo "make rpm"
+	@echo "make upload        (to Pypi)"
+	@echo "make info          (Create package info)"
+	@echo "make register      (Register with Pypi)"
+	@echo ""
+	@echo "BUILDING"
+	@echo "make build_ext     (build C extension)"
+	@echo "make build_extXY   (build C extension for PythonX.Y"
+	@echo ""
+	@echo "TESTING"
+	@echo "make test          (nosetests)"
+	@echo "make tox           (test all Python versions)"
+	@echo "make toxXY         (test PythonX.Y)"
+	@echo ""
+	@echo "CODE QUALITY"
+	@echo "make lint|flakes   (pyflakes)"
+	@echo ""
+	@echo "CLEAN"
+	@echo "make clean         (all of below)"
+	@echo "make clean-build"
+	@echo "make clean-pyc"
+	@echo "make clean-test"
 
 
 # ---------------------------------------------------------
@@ -27,7 +50,7 @@ info:
 	python setup.py egg_info
 
 register:
-	echo "https://pypi.python.org/pypi?%3Aaction=submit_form"
+	@echo "https://pypi.python.org/pypi?%3Aaction=submit_form"
 
 
 # ---------------------------------------------------------
@@ -92,8 +115,8 @@ tox35: swig build_ext35
 # lint
 # 
 flakes: lint
-lint: swig
-	pyflakes tsip/*.py tests/*.py
+lint: clean
+	pyflakes $(NAME)/*.py tests/*.py
 
 # clean
 #
