@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 NAME = 'gpsdshm'
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 LICENSE = 'BSD License'
 AUTHOR = 'Markus Juenemann'
 EMAIL = 'markus@juenemann.net'
@@ -45,7 +45,7 @@ setup(
         'Natural Language :: English',
         'Operating System :: Unix',
         'Topic :: Software Development :: Libraries',
-        'Programming Language :: Python :: C',
+        'Programming Language :: C',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 2.6',

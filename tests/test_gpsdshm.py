@@ -45,6 +45,9 @@ def test_gpsdshm():
 
     now = time.time()
 
+    assert gpsdshm.GPSD_API_MAJOR_VERSION in [5,6]
+    assert isinstance(gpsdshm.GPSD_API_MINOR_VERSION, (int))
+
     assert isinstance(gpsd_shm.online, (float))
     assert now-2 < gpsd_shm.online < now+2
 
@@ -119,7 +122,7 @@ def test_gpsdshm():
     assert 0.0 < gpsd_shm.dop.tdop < 3.0
 
     assert isinstance(gpsd_shm.dop.gdop, (float))
-    assert 0.0 < gpsd_shm.dop.gdop < 3.0
+    assert 0.0 < gpsd_shm.dop.gdop < 7.0
 
     for i in range(gpsdshm.shm.MAXCHANNELS):
         assert isinstance(gpsd_shm.satellites[i].ss, (float))
@@ -134,7 +137,7 @@ def test_gpsdshm():
         assert gpsd_shm.satellites[i].prn == gpsd_shm.satellites[i].PRN
 
         assert isinstance(gpsd_shm.satellites[i].elevation, (int))
-        assert 0 <= gpsd_shm.satellites[i].elevation <= 90
+        assert -10 <= gpsd_shm.satellites[i].elevation <= 90
 
         assert isinstance(gpsd_shm.satellites[i].azimuth, (int))
         assert 0 <= gpsd_shm.satellites[i].azimuth , 360.0

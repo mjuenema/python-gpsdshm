@@ -2,15 +2,13 @@
 python-gpsdshm
 **************
 
-**This project has not released any code yet!**
-
 Overview
 ========
 
 *python-gpsdshm* provides a read-only(!) Python interface to `gpsd`_'s shared memory. It provides
-a single class ``GpsdShm`` that exposes the fields of the shared memory structure as attributes. The
+a single class ``Shm`` that exposes the fields of the shared memory structure as attributes. The
 *python-gpsdshm* API is (loosely) modelled on gpsd version 3.16 (API 6.1). gpsd releases earlier
-than 2.96 are not supported.
+than 3.0 are not supported.
 
 *python-gpsdshm* is implemented using Swig_ and requires the `gpsd` header files for compilation.
 
