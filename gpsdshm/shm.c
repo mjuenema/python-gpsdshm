@@ -181,20 +181,27 @@ double get_satellite_ss(struct shmexport_t *shm, unsigned int index)  {
 #endif
 }
 
-int get_satellite_used(struct shmexport_t *shm, unsigned int prn)  {
 #if GPSD_API_MAJOR_VERSION == 5
+int get_satellite_used(struct shmexport_t *shm, unsigned int prn)  {
     int i;
     for (i = 0; i < shm->gpsdata.satellites_used; i++) {
+        //printf("%d ", shm->gpsdata.used[i]);
         if(shm->gpsdata.used[i] == prn) {
+            //printf("\n"); 
             return 1;
         }
     }
+    //printf("\n"); 
     return 0;
-#endif
-#if GPSD_API_MAJOR_VERSION == 6
-    return shm->gpsdata.skyview[index].used;
-#endif
 }
+#endif
+
+#if GPSD_API_MAJOR_VERSION == 6
+int get_satellite_used(struct shmexport_t *shm, unsigned int index)  {
+    return shm->gpsdata.skyview[index].used;
+}
+#endif
+
 
 int get_satellite_prn(struct shmexport_t *shm, unsigned int index)  {
 #if GPSD_API_MAJOR_VERSION == 5

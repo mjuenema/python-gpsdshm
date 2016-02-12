@@ -5,6 +5,10 @@ Python interface to GPSd Shared Memory.
 
 import gpsdshm.shm
 
+MAXCHANNELS = gpsdshm.shm.MAXCHANNELS
+GPSD_API_MAJOR_VERSION = gpsdshm.shm.GPSD_API_MAJOR_VERSION
+GPSD_API_MINOR_VERSION = gpsdshm.shm.GPSD_API_MINOR_VERSION
+
 
 class Fix(object):
 
@@ -65,8 +69,8 @@ class Satellites(object):
             raise IndexError
 
         ss = gpsdshm.shm.get_satellite_ss(self.shm, index)
-        used = gpsdshm.shm.get_satellite_used(self.shm, index) == True
         prn = gpsdshm.shm.get_satellite_prn(self.shm, index)
+        used = gpsdshm.shm.get_satellite_used(self.shm, prn) == True
         elevation = gpsdshm.shm.get_satellite_elevation(self.shm, index)
         azimuth = gpsdshm.shm.get_satellite_azimuth(self.shm, index)
 
@@ -116,3 +120,5 @@ class Shm(object):
     dev = device = property(lambda self: gpsdshm.shm.get_dev(self.shm))
     skyview_time = property(lambda self: gpsdshm.shm.get_skyview_time(self.shm))
     satellites_visible = property(lambda self: gpsdshm.shm.get_satellites_visible(self.shm))
+
+

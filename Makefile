@@ -90,7 +90,7 @@ swig: clean-build
 # test
 #
 test: build_ext
-	python `which nosetests` -v -x tests/
+	python `which nosetests` -v -x --pdb --pdb-fail tests/
 
 tox: tox26 tox27 tox33 tox34 tox35
 
