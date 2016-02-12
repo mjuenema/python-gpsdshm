@@ -116,6 +116,3 @@ class Shm(object):
     dev = device = property(lambda self: gpsdshm.shm.get_dev(self.shm))
     skyview_time = property(lambda self: gpsdshm.shm.get_skyview_time(self.shm))
     satellites_visible = property(lambda self: gpsdshm.shm.get_satellites_visible(self.shm))
-    
-    
-    
