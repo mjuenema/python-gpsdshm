@@ -181,12 +181,11 @@ double get_satellite_ss(struct shmexport_t *shm, unsigned int index)  {
 #endif
 }
 
-int get_satellite_used(struct shmexport_t *shm, unsigned int index)  {
+int get_satellite_used(struct shmexport_t *shm, unsigned int prn)  {
 #if GPSD_API_MAJOR_VERSION == 5
     int i;
-    for(i=0;i++;i<MAXCHANNELS) {
-        printf("%d\n", shm->gpsdata.used[i]);
-        if(shm->gpsdata.used[i] == index) {
+    for (i = 0; i < shm->gpsdata.satellites_used; i++) {
+        if(shm->gpsdata.used[i] == prn) {
             return 1;
         }
     }
