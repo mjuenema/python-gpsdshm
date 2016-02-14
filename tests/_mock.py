@@ -51,7 +51,7 @@ class MockShm(object):
 
     def __init__(self):
         self.online = time.time()
-        self.status = True
+        self.status = 1
         self.fix_time = time.time()
         self.satellites_visible = 8
         self.fix = MockFix()
