@@ -1,5 +1,11 @@
 language: python
 
+addons:
+  apt:
+    packages:
+    - swig
+    - libgps-dev
+
 python:
   - "3.5"
   - "3.4"
@@ -16,9 +22,6 @@ branches:
 
 before_install:
   - pip install codecov
-  - apt-get update
-  - apt-get install -qq swig
-  - apt-get install -qq libgps-dev
 
 install:
   - pip install -r requirements.txt
