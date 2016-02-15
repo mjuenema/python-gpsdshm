@@ -5,10 +5,6 @@ addons:
     packages:
     - swig
     
-cache:
-  directories:
-    - $HOME/gpsd
-
 python:
   - "3.5"
   - "3.4"
@@ -31,7 +27,7 @@ before_install:
   
 before_script:
   - cd $HOME
-  - [ -d gpsd ] || git clone git://git.savannah.nongnu.org/gpsd.git
+  - git clone git://git.savannah.nongnu.org/gpsd.git
   - cd gpsd
   - git checkout master && git pull origin master
   - scons export_shm=yes prefix=$HOME
