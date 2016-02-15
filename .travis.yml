@@ -7,7 +7,7 @@ addons:
     
 cache:
   directories:
-  - $HOME/gpsd
+    - $HOME/gpsd
 
 python:
   - "3.5"
