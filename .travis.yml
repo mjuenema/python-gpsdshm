@@ -11,9 +11,9 @@ python:
 
 before_install:
   - pip install codecov
-  - sudo apt-cache update
+  - sudo apt-get update
   - sudo apt-get install -qq swig
-  - sudo apt-get install libgps-dev
+  - sudo apt-get install -qq libgps-dev
 
 install:
   - pip install -r requirements.txt
