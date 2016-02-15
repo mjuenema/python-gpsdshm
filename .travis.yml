@@ -44,4 +44,4 @@ after_success:
 # command to run tests, e.g. python setup.py test
 script: 
   - cd $TRAVIS_BUILD_DIR
-  - make test
+  - CPATH=$HOME/include LIBRARY_PATH=$HOME/lib make test
