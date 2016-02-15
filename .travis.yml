@@ -16,9 +16,9 @@ branches:
 
 before_install:
   - pip install codecov
-  - sudo apt-get update
-  - sudo apt-get install -qq swig
-  - sudo apt-get install -qq libgps-dev
+  - apt-get update
+  - apt-get install -qq swig
+  - apt-get install -qq libgps-dev
 
 install:
   - pip install -r requirements.txt
