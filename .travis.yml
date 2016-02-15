@@ -43,5 +43,5 @@ after_success:
 
 # command to run tests, e.g. python setup.py test
 script: 
-  - cd $HOME/mjuenema/python-gpsdshm
+  - cd $TRAVIS_BUILD_DIR
   - make test
