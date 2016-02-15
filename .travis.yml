@@ -4,7 +4,6 @@ addons:
   apt:
     packages:
     - swig
-    - scons
 
 python:
   - "3.5"
@@ -22,6 +21,7 @@ branches:
 
 before_install:
   - pip install codecov
+  - pip install SCons
   
 before_script:
   - cd $HOME
