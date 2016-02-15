@@ -20,10 +20,10 @@ branches:
     - develop
 
 before_install:
-  - pip install pip
-  - pip install setuptools
-  - pip install codecov
-  - pip install SCons
+  - pip install --upgrade pip
+  - pip install --upgrade setuptools
+  - pip install --upgrade codecov
+  - pip install --upgrade SCons
   
 before_script:
   - cd $HOME
