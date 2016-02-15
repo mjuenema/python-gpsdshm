@@ -8,6 +8,11 @@ python:
   - "2.6"
   - "pypy"
   - "pypy3"
+  
+branches:
+  only:
+    - master
+    - develop
 
 before_install:
   - pip install codecov
