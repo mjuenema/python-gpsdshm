@@ -4,7 +4,7 @@ addons:
   apt:
     packages:
     - swig
-    - libgps-dev
+    - scons
 
 python:
   - "3.5"
@@ -22,6 +22,14 @@ branches:
 
 before_install:
   - pip install codecov
+  
+before_script:
+  - cd /tmp
+  - git clone git://git.savannah.nongnu.org/gpsd.git
+  - cd gpsd
+  - checkout master && git pull origin master
+  - scons export_shm=yes
+  - scons install
 
 install:
   - pip install -r requirements.txt
