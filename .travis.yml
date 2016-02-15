@@ -46,4 +46,6 @@ after_success:
   - codecov
 
 # command to run tests, e.g. python setup.py test
-script: make test
+script: 
+  - cd $HOME/python-gpsdshm
+  - make test
