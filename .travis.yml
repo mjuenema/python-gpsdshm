@@ -24,12 +24,16 @@ before_install:
   - pip install codecov
   
 before_script:
-  - cd /tmp
+  - cd $HOME
   - git clone git://git.savannah.nongnu.org/gpsd.git
   - cd gpsd
-  - checkout master && git pull origin master
+  - git checkout master && git pull origin master
   - scons export_shm=yes
   - scons install
+  
+cache:
+  directories:
+    - $HOME/gpsd
 
 install:
   - pip install -r requirements.txt
