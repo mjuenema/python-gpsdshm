@@ -20,6 +20,8 @@ branches:
     - develop
 
 before_install:
+  - pip install pip
+  - pip install setuptools
   - pip install codecov
   - pip install SCons
   
