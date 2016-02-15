@@ -4,6 +4,10 @@ addons:
   apt:
     packages:
     - swig
+    
+cache:
+  directories:
+  - $HOME/gpsd
 
 python:
   - "3.5"
@@ -27,7 +31,7 @@ before_install:
   
 before_script:
   - cd $HOME
-  - git clone git://git.savannah.nongnu.org/gpsd.git
+  - [ -d gpsd ] || git clone git://git.savannah.nongnu.org/gpsd.git
   - cd gpsd
   - git checkout master && git pull origin master
   - scons export_shm=yes prefix=$HOME
@@ -43,5 +47,5 @@ after_success:
 
 # command to run tests, e.g. python setup.py test
 script: 
-  - cd $HOME/python-gpsdshm
+  - cd $HOME/mjuenema/python-gpsdshm
   - make test
