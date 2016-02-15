@@ -30,7 +30,7 @@ before_script:
   - git clone git://git.savannah.nongnu.org/gpsd.git
   - cd gpsd
   - git checkout master && git pull origin master
-  - scons export_shm=yes
+  - scons export_shm=yes prefix=$HOME
   - scons install
   
 cache:
