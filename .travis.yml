@@ -63,7 +63,6 @@ before_script:
   - cd gpsd
   - git checkout release-$GPSD_RELEASE && git pull origin release-$GPSD_RELEASE
   - /usr/bin/python2 $HOME/bin/scons export_shm=yes python=no manbuild=no prefix=$HOME
-  - /usr/bin/python2 $HOME/bin/scons install
   
 install:
   - cd $TRAVIS_BUILD_DIR
@@ -79,5 +78,5 @@ script:
   - cd $TRAVIS_BUILD_DIR/gpsdshm
   - swig -python shm.i
   - cd $TRAVIS_BUILD_DIR
-  - CPATH=$HOME/include LIBRARY_PATH=$HOME/lib python${TRAVIS_PYTHON_VERSION} setup.py build_ext --inplace
+  - CPATH=$HOME/gpsd LIBRARY_PATH=$HOME/gpsd python${TRAVIS_PYTHON_VERSION} setup.py build_ext --inplace
   - python${TRAVIS_PYTHON_VERSION} `which nosetests` -v tests/
