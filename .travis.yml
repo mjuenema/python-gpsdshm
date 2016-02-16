@@ -10,7 +10,7 @@ addons:
   apt:
     packages:
     - swig
-    - python python-pip python-dev
+    - python python-setuptools
     
 python:
   - 2.7
@@ -25,6 +25,7 @@ before_install:
   - pip${TRAVIS_PYTHON_VERSION} install --upgrade pip
   - pip${TRAVIS_PYTHON_VERSION} install --upgrade setuptools
   - pip${TRAVIS_PYTHON_VERSION} install --upgrade codecov
+  - ls /usr/bin/easy*
   - ls /usr/bin/pip*
   - /usr/bin/pip2 install --upgrade SCons
   
