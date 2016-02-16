@@ -8,9 +8,21 @@ Overview
 *python-gpsdshm* provides a read-only(!) Python interface to `gpsd`_'s shared memory. It provides
 a single class ``Shm`` that exposes the fields of the shared memory structure as attributes. The
 *python-gpsdshm* API is (loosely) modelled on gpsd version 3.16 (API 6.1). gpsd releases earlier
-than 3.0 are not supported.
+than 3.0 are not supported. 
 
-*python-gpsdshm* is implemented using Swig_ and requires the `gpsd` header files for compilation.
+*python-gpsdshm* is implemented using Swig_ and requires the `gpsd` header files for compilation. 
+
+The following Python versions are supported:
+
+* Python 2.6
+* Python 2.7
+* Python 3.3
+* Python 3.4
+* Python 3.5
+
+Continuous integration test results are available at `python-gpsdshm Travis-CI page`_.
+
+.. _`python-gpsdshm Travis-CI page`: https://travis-ci.org/mjuenema/python-gpsdshm
 
 Many Linux distributions ship the gpsd package **without** shared memory support.
 See `Compiling gpsd with shared memory support`_ for details how to build gpsd
