@@ -62,7 +62,7 @@ before_script:
   - git clone git://git.savannah.nongnu.org/gpsd.git
   - cd gpsd
   - git checkout release-$GPSD_RELEASE && git pull origin release-$GPSD_RELEASE
-  - /usr/bin/python2 $HOME/bin/scons export_shm=yes python=no manbuild=no ntpshm=no leapfetch=no prefix=$HOME
+  - /usr/bin/python2 $HOME/bin/scons export_shm=yes python=no manbuild=no prefix=$HOME
   
 install:
   - cd $TRAVIS_BUILD_DIR
