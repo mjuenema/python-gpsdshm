@@ -10,6 +10,7 @@ addons:
   apt:
     packages:
     - swig
+    - mercurial
     
 python:
   - 2.7
@@ -22,7 +23,7 @@ branches:
 
 before_install:
   - cd $HOME 
-  - git clone https://bitbucket.org/scons/scons
+  - hg clone https://bitbucket.org/scons/scons
   - cd scons
   - /usr/bin/python2 bootstrap.py build/scons
   - cd build/scons
