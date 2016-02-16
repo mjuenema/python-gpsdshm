@@ -6,11 +6,8 @@ addons:
     - swig
     
 python:
-  - 3.5
-  - 3.4
-  - 3.3
   - 2.7
-  - 2.6
+
   
 branches:
   only:
@@ -18,9 +15,9 @@ branches:
     - develop
 
 before_install:
-  - pip install --upgrade pip
-  - pip install --upgrade setuptools
-  - pip install --upgrade codecov
+  - pip${TRAVIS_PYTHON_VERSION} install --upgrade pip
+  - pip${TRAVIS_PYTHON_VERSION} install --upgrade setuptools
+  - pip${TRAVIS_PYTHON_VERSION} install --upgrade codecov
   - pip install --upgrade SCons
   
 before_script:
