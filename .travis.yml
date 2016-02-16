@@ -6,13 +6,11 @@ addons:
     - swig
     
 python:
-  - "3.5"
-  - "3.4"
-  - "3.3"
-  - "2.7"
-  - "2.6"
-  - "pypy"
-  - "pypy3"
+  - 3.5
+  - 3.4
+  - 3.3
+  - 2.7
+  - 2.6
   
 branches:
   only:
@@ -44,4 +42,5 @@ after_success:
 # command to run tests, e.g. python setup.py test
 script: 
   - cd $TRAVIS_BUILD_DIR
-  - CPATH=$HOME/include LIBRARY_PATH=$HOME/lib make test
+  - CPATH=$HOME/include LIBRARY_PATH=$HOME/lib python${TRAVIS_PYTHON_VERSION} setup.py build_ext --inplace
+  - python${TRAVIS_PYTHON_VERSION} `which nosetests` -v tests/
