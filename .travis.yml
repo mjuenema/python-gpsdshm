@@ -12,6 +12,7 @@ addons:
     - swig
     - mercurial
     - chrpath
+    - xmlto
     
 python:
   - 2.6
