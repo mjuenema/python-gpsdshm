@@ -12,7 +12,7 @@ than 3.0 are not supported.
 
 *python-gpsdshm* is implemented using Swig_ and requires the `gpsd` header files for compilation. 
 
-The following Python versions are supported:
+*python-gpsdshm* is automatically tested against the following Python versions:
 
 * Python 2.6
 * Python 2.7
@@ -21,6 +21,26 @@ The following Python versions are supported:
 * Python 3.5
 
 Continuous integration test results are available at `python-gpsdshm Travis-CI page`_.
+
++--------------+-------------------+-------------------+
+| Branch       | Test status       | Test coverage     |
++==============+===================+===================+
+| master       | |traviscimaster|  | |codecovmaster|   |
++--------------+-------------------+-------------------+
+| develop      | |traviscidevelop| | |codecovdevelop|  |
++--------------+-------------------+-------------------+
+
+.. |traviscimaster| image:: https://img.shields.io/travis/mjuenema/python-gpsdshm/master.svg
+    :target: https://travis-ci.org/mjuenema/python-gpsdshm/branches
+
+.. |traviscidevelop| image:: https://img.shields.io/travis/mjuenema/python-gpsdshm/develop.svg
+    :target: https://travis-ci.org/mjuenema/python-gpsdshm/branches
+   
+.. |codecovmaster| image:: https://codecov.io/github/mjuenema/python-gpsdshm/coverage.svg?branch=master
+    :target: https://codecov.io/github/mjuenema/python-gpsdshm?branch=master
+    
+.. |codecovdevelop| image:: https://codecov.io/github/mjuenema/python-gpsdshm/coverage.svg?branch=develop
+    :target: https://codecov.io/github/mjuenema/python-gpsdshm?branch=develop
 
 .. _`python-gpsdshm Travis-CI page`: https://travis-ci.org/mjuenema/python-gpsdshm
 
