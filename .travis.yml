@@ -15,11 +15,13 @@ addons:
 python:
   - 2.6
   - 2.7
-  - 3.2
   - 3.3
   - 3.4
   - 3.5
-  - nightly
+  
+env:
+  - GPSD_RELEASE=3.16
+  - GPSD_RELEASE=3.15
   
 branches:
   only:
@@ -42,7 +44,7 @@ before_script:
   - cd $HOME
   - git clone git://git.savannah.nongnu.org/gpsd.git
   - cd gpsd
-  - git checkout master && git pull origin master
+  - git checkout release-$GPSD_RELEASE && git pull origin release-$GPSD_RELEASE
   - /usr/bin/python2 $HOME/bin/scons export_shm=yes python=no prefix=$HOME
   - /usr/bin/python2 $HOME/bin/scons install
   
