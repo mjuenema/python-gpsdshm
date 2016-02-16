@@ -62,7 +62,7 @@ before_script:
   - git clone git://git.savannah.nongnu.org/gpsd.git
   - cd gpsd
   - git checkout release-$GPSD_RELEASE && git pull origin release-$GPSD_RELEASE
-  - [[ -f leapseconds.cache ]] && rm -fv leapseconds.cache
+  - test -f leapseconds.cache && rm -fv leapseconds.cache
   - /usr/bin/python2 $HOME/bin/scons export_shm=yes python=no manbuild=no prefix=$HOME
   
 install:
