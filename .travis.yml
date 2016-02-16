@@ -40,7 +40,7 @@ before_script:
   - git clone git://git.savannah.nongnu.org/gpsd.git
   - cd gpsd
   - git checkout master && git pull origin master
-  - /usr/bin/python2 $HOME/bin/scons export_shm=yes prefix=$HOME
+  - /usr/bin/python2 $HOME/bin/scons export_shm=yes python=no prefix=$HOME
   - /usr/bin/python2 $HOME/bin/scons install
   
 install:
