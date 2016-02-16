@@ -27,7 +27,8 @@ before_install:
   - cd scons
   - /usr/bin/python2 bootstrap.py build/scons
   - cd build/scons
-  - /usr/bin/python2 setup.py install
+  - /usr/bin/python2 setup.py install --prefix=$HOME
+  - ls $HOME/bin $HOME
   - pip${TRAVIS_PYTHON_VERSION} install --upgrade pip
   - pip${TRAVIS_PYTHON_VERSION} install --upgrade setuptools
   - pip${TRAVIS_PYTHON_VERSION} install --upgrade codecov
@@ -37,8 +38,8 @@ before_script:
   - git clone git://git.savannah.nongnu.org/gpsd.git
   - cd gpsd
   - git checkout master && git pull origin master
-  - scons export_shm=yes prefix=$HOME
-  - scons install
+  - $HOME/bin/scons export_shm=yes prefix=$HOME
+  - $HOME/bin/scons install
   
 install:
   - pip install -r requirements.txt
