@@ -10,7 +10,7 @@ addons:
   apt:
     packages:
     - swig
-    - python
+    - python python-pip python-dev
     
 python:
   - 2.7
