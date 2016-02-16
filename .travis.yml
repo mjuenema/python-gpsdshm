@@ -25,8 +25,8 @@ before_install:
   - pip${TRAVIS_PYTHON_VERSION} install --upgrade pip
   - pip${TRAVIS_PYTHON_VERSION} install --upgrade setuptools
   - pip${TRAVIS_PYTHON_VERSION} install --upgrade codecov
-  - ls /usr/bin/python*
-  - pip install --upgrade SCons
+  - ls /usr/bin/pip*
+  - /usr/bin/pip2 install --upgrade SCons
   
 before_script:
   - cd $HOME
