@@ -20,13 +20,13 @@ than 3.0 are not supported.
 * Python 3.4
 * Python 3.5
 
-+--------------+-------------------+-------------------+--------------------+
-| Branch       | Travis-CI         | Codecov           | Codacy             |
-+==============+===================+===================+====================+
-| master       | |traviscimaster|  | |codecovmaster|   | |codacymaster|     |
-+--------------+-------------------+-------------------+--------------------+
-| develop      | |traviscidevelop| | |codecovdevelop|  | |codacydevelop|    |
-+--------------+-------------------+-------------------+--------------------+
++--------------+-------------------+-------------------+--------------------+--------------------+
+| Branch       | Travis-CI         | Codecov           | Codacy             | Landscape          |
++==============+===================+===================+====================+====================+
+| master       | |traviscimaster|  | |codecovmaster|   | |codacymaster|     | |landscapemaster|  |
++--------------+-------------------+-------------------+--------------------+--------------------+
+| develop      | |traviscidevelop| | |codecovdevelop|  | |codacydevelop|    | |landscapedevelop| |
++--------------+-------------------+-------------------+--------------------+--------------------+
 
 .. |traviscimaster| image:: https://img.shields.io/travis/mjuenema/python-gpsdshm/master.svg
     :target: https://travis-ci.org/mjuenema/python-gpsdshm/branches
@@ -45,6 +45,12 @@ than 3.0 are not supported.
 
 .. |codacydevelop| image:: https://img.shields.io/codacy/aa369a5a5f1c4eccb69ba738ae1a93dd/develop.svg
     :target: https://www.codacy.com/app/markus_2/python-gpsdshm/dashboard
+    
+.. |landscapemaster| image:: https://landscape.io/github/mjuenema/python-gpsdshm/master/landscape.svg?style=flat
+   :target: https://landscape.io/github/mjuenema/python-gpsdshm/master
+   
+.. |landscapedevelop| image:: https://landscape.io/github/mjuenema/python-gpsdshm/develop/landscape.svg?style=flat
+   :target: https://landscape.io/github/mjuenema/python-gpsdshm/develop
 
 .. _`python-gpsdshm Travis-CI page`: https://travis-ci.org/mjuenema/python-gpsdshm
 
