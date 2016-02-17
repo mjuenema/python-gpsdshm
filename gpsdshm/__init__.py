@@ -73,7 +73,7 @@ class Satellites(object):
 
         ss = gpsdshm.shm.get_satellite_ss(self.shm, index)
         prn = gpsdshm.shm.get_satellite_prn(self.shm, index)
-        used = gpsdshm.shm.get_satellite_used(self.shm, prn) == True
+        used = gpsdshm.shm.get_satellite_used(self.shm, prn is True
         elevation = gpsdshm.shm.get_satellite_elevation(self.shm, index)
         azimuth = gpsdshm.shm.get_satellite_azimuth(self.shm, index)
 
@@ -107,7 +107,7 @@ class Shm(object):
     def __init__(self):
 
         self.shm = gpsdshm.shm.shm_get()
-        if self.shm == None:
+        if self.shm is None:
             raise OSError('GPSd shared memory error: %s' % (gpsdshm._error))
 
         self.fix = Fix(self.shm)
