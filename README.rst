@@ -20,15 +20,13 @@ than 3.0 are not supported.
 * Python 3.4
 * Python 3.5
 
-Continuous integration test results are available at `python-gpsdshm Travis-CI page`_.
-
-+--------------+-------------------+-------------------+
-| Branch       | Test status       | Test coverage     |
-+==============+===================+===================+
-| master       | |traviscimaster|  | |codecovmaster|   |
-+--------------+-------------------+-------------------+
-| develop      | |traviscidevelop| | |codecovdevelop|  |
-+--------------+-------------------+-------------------+
++--------------+-------------------+-------------------+--------------------+
+| Branch       | Travis-CI         | Codecov           | Codacy             |
++==============+===================+===================+====================+
+| master       | |traviscimaster|  | |codecovmaster|   | |codacymaster|     |
++--------------+-------------------+-------------------+--------------------+
+| develop      | |traviscidevelop| | |codecovdevelop|  | |codacydevelop|    |
++--------------+-------------------+-------------------+--------------------+
 
 .. |traviscimaster| image:: https://img.shields.io/travis/mjuenema/python-gpsdshm/master.svg
     :target: https://travis-ci.org/mjuenema/python-gpsdshm/branches
@@ -41,6 +39,12 @@ Continuous integration test results are available at `python-gpsdshm Travis-CI p
     
 .. |codecovdevelop| image:: https://codecov.io/github/mjuenema/python-gpsdshm/coverage.svg?branch=develop
     :target: https://codecov.io/github/mjuenema/python-gpsdshm?branch=develop
+    
+.. |codacymaster| image:: https://img.shields.io/codacy/e27821fb6289410b8f58338c7e0bc686/master.svg
+    :target: https://www.codacy.com/app/markus_2/python-gpsdshm/dashboard?bid=3134508
+
+.. |codacydevelop| image:: https://img.shields.io/codacy/e27821fb6289410b8f58338c7e0bc686/develop.svg
+    :target: https://www.codacy.com/app/markus_2/python-gpsdshm/dashboard?bid=3134507
 
 .. _`python-gpsdshm Travis-CI page`: https://travis-ci.org/mjuenema/python-gpsdshm
 
