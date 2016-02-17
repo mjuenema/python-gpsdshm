@@ -10,7 +10,7 @@ a single class ``Shm`` that exposes the fields of the shared memory structure as
 *python-gpsdshm* API is (loosely) modelled on gpsd version 3.16 (API 6.1). gpsd releases earlier
 than 3.0 are not supported. 
 
-*python-gpsdshm* is implemented using Swig_ and requires the `gpsd` header files for compilation. 
+*python-gpsdshm* is implemented using Swig_ and requires the `gpsd` header files for compilation. Please note that some Linux distributions contain Swig_ releases that are too old for working with Python 3.
 
 *python-gpsdshm* is automatically tested against the following Python versions:
 
