@@ -62,7 +62,7 @@ class Satellites(object):
     """List of `GpsdShmSatellite` instances.
 
     """
-    
+
     def __init__(self, shm):
         self.shm = shm
 

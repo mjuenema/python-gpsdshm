@@ -1,16 +1,16 @@
 """
 Tests for gpsdshm.
 
-These tests can be run against a real gpsd with shared memory 
+These tests can be run against a real gpsd with shared memory
 or a mock-up. This is determined by whether the `shm.fix.latitude`
 attribute returns a "real" value or 0.0. The mock-up version is
 useful when running 'python setup.py test' or testing under tox
 and there is no gpsd process running.
 
 The threshholds for valid values are somewhat arbitrary with the
-hope that they pass in most common scenarios. If testing against 
+hope that they pass in most common scenarios. If testing against
 a real GPS, let the GPS settle-in for a while. Also don't run
-the tests while at supersonic speed or at higher altitude than 
+the tests while at supersonic speed or at higher altitude than
 Mt Everest. They are guaranteed to fail!
 
 Markus Juenemann, 29-Jan-2016
@@ -47,7 +47,7 @@ def test_gpsdshm():
 
     assert gpsdshm.GPSD_API_MAJOR_VERSION in [5,6]
     assert isinstance(gpsdshm.GPSD_API_MINOR_VERSION, (int))
-    
+
     assert gpsdshm.STATUS_NO_FIX == 0
     assert gpsdshm.STATUS_FIX == 1
     assert gpsdshm.STATUS_DGPS_FIX == 2

@@ -40,12 +40,12 @@ class MockDop(object):
 
 class MockSatellite(object):
     def __init__(self, prn):
-        self.ss = 0.0 
+        self.ss = 0.0
         self.prn = self.PRN = prn
         self.used = True
         self.elevation = prn
         self.azimuth = prn
-        
+
 
 class MockShm(object):
 
