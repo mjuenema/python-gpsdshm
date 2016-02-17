@@ -58,7 +58,7 @@ def test_gpsdshm():
     assert isinstance(gpsd_shm.status, (int))
     assert not isinstance(gpsd_shm.status, (bool))      # issue 6
     assert gpsd_shm.status in [gpsdshm.STATUS_NO_FIX, gpsdshm.STATUS_FIX, gpsdshm.STATUS_DGPS_FIX]
-    
+
     assert isinstance(gpsd_shm.skyview_time, (float))
     assert now-2 < gpsd_shm.skyview_time < now+2 or math.isnan(gpsd_shm.skyview_time)
 

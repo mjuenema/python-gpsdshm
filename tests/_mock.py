@@ -58,5 +58,3 @@ class MockShm(object):
         self.dop = MockDop()
         self.skyview_time = float('nan')
         self.satellites = [MockSatellite(prn) for prn in range(MAXCHANNELS)]
-         
-    

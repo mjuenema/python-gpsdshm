@@ -91,7 +91,7 @@ class Devices(object):
     """List of `GpsdShmDevice` (singular) instances.
 
     """
-    
+
     def __init__(self, shm):
         self.shm = shm
 
@@ -108,7 +108,7 @@ class Shm(object):
 
         self.shm = gpsdshm.shm.shm_get()
         if self.shm == None:
-            raise OSError('GPSd shared memory error: %s' % (self.shm, gpsdshm._error))
+            raise OSError('GPSd shared memory error: %s' % (gpsdshm._error))
 
         self.fix = Fix(self.shm)
         self.dop = Dop(self.shm)
