@@ -8,8 +8,6 @@ pylint:
     - too-many-arguments
 pyroma:
   run: true
-vulture:
-  run: true
 ignore-paths:
     - docs
     - tests
