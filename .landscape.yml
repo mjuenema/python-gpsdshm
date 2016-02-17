@@ -1,0 +1,21 @@
+doc-warnings: yes
+test-warnings: no
+strictness: veryhigh
+max-line-length: 120
+autodetect: yes
+pylint:
+  disable:
+    - too-many-arguments
+pyroma:
+  run: true
+vulture:
+  run: true
+ignore-paths:
+    - docs
+    - tests
+ignore-patterns:
+    - ^example/doc_.*\.py$
+    - (^|/)docs(/|$)
+python-targets:
+    - 2
+    - 3
