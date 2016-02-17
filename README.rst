@@ -40,11 +40,11 @@ than 3.0 are not supported.
 .. |codecovdevelop| image:: https://codecov.io/github/mjuenema/python-gpsdshm/coverage.svg?branch=develop
     :target: https://codecov.io/github/mjuenema/python-gpsdshm?branch=develop
     
-.. |codacymaster| image:: https://img.shields.io/codacy/e27821fb6289410b8f58338c7e0bc686/master.svg
-    :target: https://www.codacy.com/app/markus_2/python-gpsdshm/dashboard?bid=3134508
+.. |codacymaster| image:: https://img.shields.io/codacy/aa369a5a5f1c4eccb69ba738ae1a93dd/master.svg
+    :target: https://www.codacy.com/app/markus_2/python-gpsdshm/dashboard
 
-.. |codacydevelop| image:: https://img.shields.io/codacy/e27821fb6289410b8f58338c7e0bc686/develop.svg
-    :target: https://www.codacy.com/app/markus_2/python-gpsdshm/dashboard?bid=3134507
+.. |codacydevelop| image:: https://img.shields.io/codacy/aa369a5a5f1c4eccb69ba738ae1a93dd/develop.svg
+    :target: https://www.codacy.com/app/markus_2/python-gpsdshm/dashboard
 
 .. _`python-gpsdshm Travis-CI page`: https://travis-ci.org/mjuenema/python-gpsdshm
 
