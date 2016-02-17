@@ -7,6 +7,7 @@ Markus Juenemann, 04-Feb-2016
 
 import time
 from gpsdshm.shm import MAXCHANNELS
+from gpsdshm import Satellite
 
 class MockFix(object):
     def __init__(self):
@@ -38,13 +39,14 @@ class MockDop(object):
         self.gdop = 2.4342743978108503
 
 
-class MockSatellite(object):
+class MockSatellite(Satellite):
     def __init__(self, prn):
-        self.ss = 0.0
-        self.prn = self.PRN = prn
-        self.used = True
-        self.elevation = prn
-        self.azimuth = prn
+        super(MockSatellite, self).__init__(ss=0.0, used=True, prn=prn, elevation=prn, azimuth=prn)
+        #self.ss = 0.0
+        #self.prn = self.PRN = prn
+        #self.used = True
+        #self.elevation = prn
+        #self.azimuth = prn
 
 
 class MockShm(object):
