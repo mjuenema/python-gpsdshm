@@ -6,6 +6,7 @@ autodetect: yes
 pylint:
   disable:
     - too-many-arguments
+    - too-few-public-methods
 pyroma:
   run: true
 ignore-paths:
