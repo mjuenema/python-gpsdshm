@@ -20,7 +20,7 @@ Markus Juenemann, 29-Jan-2016
 import sys
 import math
 
-#from nose.tools import *
+from nose.tools import *
 
 import gpsdshm
 import time
@@ -40,6 +40,10 @@ def setup():
         import _mock
         gpsd_shm = _mock.MockShm()
 
+@raises(IndexError)
+def test_satellites_index_error():
+    gpsd_shm.satellites[gpsdshm.shm.MAXCHANNELS]
+
 
 def test_gpsdshm():
 
@@ -53,7 +57,7 @@ def test_gpsdshm():
     assert gpsdshm.STATUS_DGPS_FIX == 2
 
     assert isinstance(gpsd_shm.online, (float))
-    assert now-2 < gpsd_shm.online < now+2
+    assert 1060820354.0 <= gpsd_shm.online < now+2
 
     assert isinstance(gpsd_shm.status, (int))
     assert not isinstance(gpsd_shm.status, (bool))      # issue 6
@@ -66,7 +70,7 @@ def test_gpsdshm():
     assert 0 < gpsd_shm.satellites_visible < 73
 
     assert isinstance(gpsd_shm.fix.time, (float))
-    assert now-2 < gpsd_shm.fix.time < now+2
+    assert 1060820354.0 <= gpsd_shm.fix.time < now+2
 
     assert gpsd_shm.fix.mode in [2,3]
 
@@ -101,7 +105,7 @@ def test_gpsdshm():
     assert 0.0 <= gpsd_shm.fix.speed <= 343.0
 
     assert isinstance(gpsd_shm.fix.eps, (float))
-    assert 0.0 <= gpsd_shm.fix.eps <= 343.0
+    assert 0.0 <= gpsd_shm.fix.eps <= 343.0 or math.isnan(gpsd_shm.fix.eps)
 
     assert isinstance(gpsd_shm.fix.climb, (float))
     assert -100.0 < gpsd_shm.fix.climb < 100.0
@@ -113,7 +117,7 @@ def test_gpsdshm():
     assert 0.0 < gpsd_shm.dop.xdop < 3.0
 
     assert isinstance(gpsd_shm.dop.ydop, (float))
-    assert 0.0 < gpsd_shm.dop.ydop < 3.0
+    assert 0.0 < gpsd_shm.dop.ydop < 3.3
 
     assert isinstance(gpsd_shm.dop.pdop, (float))
     assert 0.0 < gpsd_shm.dop.pdop < 3.0
@@ -125,10 +129,10 @@ def test_gpsdshm():
     assert 0.0 < gpsd_shm.dop.vdop < 3.0
 
     assert isinstance(gpsd_shm.dop.tdop, (float))
-    assert 0.0 < gpsd_shm.dop.tdop < 3.0
+    assert 0.0 < gpsd_shm.dop.tdop < 5.5
 
     assert isinstance(gpsd_shm.dop.gdop, (float))
-    assert 0.0 < gpsd_shm.dop.gdop < 7.0
+    assert 0.0 < gpsd_shm.dop.gdop < 9.3
 
     for i in range(gpsdshm.shm.MAXCHANNELS):
         assert isinstance(gpsd_shm.satellites[i].ss, (float))
