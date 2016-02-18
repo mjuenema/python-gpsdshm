@@ -47,9 +47,11 @@ branches:
     - develop
     
 cache:
+  - apt
   directories:
   - $HOME/cache
   - $HOME/.ccache
+  - $HOME/.pip-cache
 
 before_install:
   - cd $HOME
@@ -61,9 +63,9 @@ before_install:
   - cd build/scons
   - /usr/bin/python2 setup.py install --prefix=$HOME
   - cd $HOME
-  - pip${TRAVIS_PYTHON_VERSION} install --upgrade pip
-  - pip${TRAVIS_PYTHON_VERSION} install --upgrade setuptools
-  - pip${TRAVIS_PYTHON_VERSION} install --upgrade codecov
+  - pip${TRAVIS_PYTHON_VERSION} install --upgrade pip --download-cache $HOME/.pip-cache
+  - pip${TRAVIS_PYTHON_VERSION} install --upgrade setuptools --download-cache $HOME/.pip-cache
+  - pip${TRAVIS_PYTHON_VERSION} install --upgrade codecov --download-cache $HOME/.pip-cache
   
 before_script:
   - cd $HOME/cache
@@ -80,9 +82,9 @@ before_script:
   
 install:
   - cd $TRAVIS_BUILD_DIR
-  - pip install -r requirements.txt
-  - pip install -r test_requirements.txt
-  - pip install coverage
+  - pip install -r requirements.txt --download-cache $HOME/.pip-cache
+  - pip install -r test_requirements.txt --download-cache $HOME/.pip-cache
+  - pip install coverage --download-cache $HOME/.pip-cache
 
 after_success:
   - codecov
