@@ -47,7 +47,7 @@ branches:
     - develop
     
 cache:
-  - apt
+  apt: true
   directories:
   - $HOME/cache
   - $HOME/.ccache
