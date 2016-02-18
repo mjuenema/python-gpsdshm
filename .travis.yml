@@ -48,29 +48,33 @@ branches:
     
 cache:
   directories:
-  - $HOME/scons
-  - $HOME/gpsd
+  - $HOME/cache
   - $HOME/.ccache
 
 before_install:
-  - cd $HOME 
-  - ls
+  - cd $HOME
+  - test -d cache || mkdir -v cache
+  - cd $HOME/cache
   - test -f scons/bootstrap.py || hg clone https://bitbucket.org/scons/scons
-  - cd scons
-  - hg tags
+  - cd $HOME/cache/scons
   - /usr/bin/python2 bootstrap.py build/scons
   - cd build/scons
   - /usr/bin/python2 setup.py install --prefix=$HOME
-  - ls $HOME/bin $HOME
+  - cd $HOME
   - pip${TRAVIS_PYTHON_VERSION} install --upgrade pip
   - pip${TRAVIS_PYTHON_VERSION} install --upgrade setuptools
   - pip${TRAVIS_PYTHON_VERSION} install --upgrade codecov
   
 before_script:
-  - cd $HOME
+  - cd $HOME/cache
   - test -f gpsd/gps.h || git clone git://git.savannah.nongnu.org/gpsd.git
+  - cd gpsd 
+  - git fetch --tags
+  - cd $HOME
+  - git clone $HOME/cache/gpsd
   - cd gpsd
-  - git checkout release-$GPSD_RELEASE && git pull origin release-$GPSD_RELEASE
+  - git checkout release-$GPSD_RELEASE
+  - git pull origin release-$GPSD_RELEASE
   - test "$GPSD_RELEASE" != "3.4" || rm -fv leapseconds.cache  # issue 18
   - /usr/bin/python2 $HOME/bin/scons export_shm=yes python=no manbuild=no qt=no leapfetch=no prefix=$HOME
   
