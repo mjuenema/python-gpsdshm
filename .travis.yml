@@ -55,9 +55,9 @@ cache:
 before_install:
   - cd $HOME 
   - ls
-  - test -d scons || hg clone https://bitbucket.org/scons/scons
+  - test -f scons/bootstrap.py || hg clone https://bitbucket.org/scons/scons
   - cd scons
-  - ls
+  - hg tags
   - /usr/bin/python2 bootstrap.py build/scons
   - cd build/scons
   - /usr/bin/python2 setup.py install --prefix=$HOME
@@ -68,7 +68,7 @@ before_install:
   
 before_script:
   - cd $HOME
-  - test -d gpsd || git clone git://git.savannah.nongnu.org/gpsd.git
+  - test -f gpsd/gps.h || git clone git://git.savannah.nongnu.org/gpsd.git
   - cd gpsd
   - git checkout release-$GPSD_RELEASE && git pull origin release-$GPSD_RELEASE
   - test "$GPSD_RELEASE" != "3.4" || rm -fv leapseconds.cache  # issue 18
