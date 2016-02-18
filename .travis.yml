@@ -13,6 +13,7 @@ addons:
     - mercurial
     - chrpath
     - xmlto
+    - ccache
     
 python:
   - 2.6
@@ -44,10 +45,16 @@ branches:
   only:
     - master
     - develop
+    
+cache:
+  directories:
+  - $HOME/scons
+  - $HOME/gpsd
+  - $HOME/.ccache
 
 before_install:
   - cd $HOME 
-  - hg clone https://bitbucket.org/scons/scons
+  - test -d scons || hg clone https://bitbucket.org/scons/scons
   - cd scons
   - /usr/bin/python2 bootstrap.py build/scons
   - cd build/scons
@@ -59,7 +66,7 @@ before_install:
   
 before_script:
   - cd $HOME
-  - git clone git://git.savannah.nongnu.org/gpsd.git
+  - test -d gpsd || git clone git://git.savannah.nongnu.org/gpsd.git
   - cd gpsd
   - git checkout release-$GPSD_RELEASE && git pull origin release-$GPSD_RELEASE
   - test "$GPSD_RELEASE" != "3.4" || rm -fv leapseconds.cache  # issue 18
