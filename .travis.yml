@@ -54,8 +54,10 @@ cache:
 
 before_install:
   - cd $HOME 
+  - ls
   - test -d scons || hg clone https://bitbucket.org/scons/scons
   - cd scons
+  - ls
   - /usr/bin/python2 bootstrap.py build/scons
   - cd build/scons
   - /usr/bin/python2 setup.py install --prefix=$HOME
