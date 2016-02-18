@@ -97,6 +97,6 @@ script:
   - swig -python shm.i
   - cd $TRAVIS_BUILD_DIR
   - CPATH=$HOME/gpsd LIBRARY_PATH=$HOME/gpsd python${TRAVIS_PYTHON_VERSION} setup.py build_ext --inplace
-  - sudo PYTHONPATH=~/gpsd/gps ~/gpsd/gpsfake -n -c 0.1 tests/short.nmea >/dev/null 2>&1 & 
+  - sudo PYTHONPATH=~/gpsd/gps PATH=~/gpsd/$PATH ~/gpsd/gpsfake -n -c 0.1 tests/short.nmea >/dev/null 2>&1 & 
   - python${TRAVIS_PYTHON_VERSION} `which nosetests` -v tests/
   - pkill -f gps
