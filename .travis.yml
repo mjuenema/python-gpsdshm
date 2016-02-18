@@ -48,6 +48,7 @@ branches:
     
 cache:
   apt: true
+  ccache: true
   directories:
   - $HOME/cache
   - $HOME/.ccache
