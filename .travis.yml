@@ -79,7 +79,8 @@ before_script:
   - git checkout release-$GPSD_RELEASE
   - git pull origin release-$GPSD_RELEASE
   - test "$GPSD_RELEASE" != "3.4" || rm -fv leapseconds.cache  # issue 18
-  - /usr/bin/python2 $HOME/bin/scons export_shm=yes python=no manbuild=no qt=no leapfetch=no prefix=$HOME
+  - PATH=/usr/lib/ccache:$PATH /usr/bin/python2 $HOME/bin/scons export_shm=yes python=no manbuild=no qt=no leapfetch=no prefix=$HOME
+  - ccache --show-stats
   
 install:
   - cd $TRAVIS_BUILD_DIR
