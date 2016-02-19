@@ -22,4 +22,4 @@ typedef double timestamp_t;
 %constant int SEEN_GPS = SEEN_GPS;
 %constant int SEEN_RTCM2 = SEEN_RTCM2;
 %constant int SEEN_RTCM3 = SEEN_RTCM3;
-%constant int SEEN_AIS = SEEN_AIS
+%constant int SEEN_AIS = SEEN_AIS;

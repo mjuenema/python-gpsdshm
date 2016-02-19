@@ -11,6 +11,10 @@ GPSD_API_MINOR_VERSION = gpsdshm.shm.GPSD_API_MINOR_VERSION
 STATUS_NO_FIX = gpsdshm.shm.STATUS_NO_FIX
 STATUS_FIX = gpsdshm.shm.STATUS_FIX
 STATUS_DGPS_FIX = gpsdshm.shm.STATUS_DGPS_FIX
+SEEN_GPS = gpsdshm.shm.SEEN_GPS
+SEEN_RTCM2 = gpsdshm.shm.SEEN_RTCM2
+SEEN_RTCM3 = gpsdshm.shm.SEEN_RTCM3
+SEEN_AIS = gpsdshm.shm.SEEN_AIS
 
 
 class Fix(object):

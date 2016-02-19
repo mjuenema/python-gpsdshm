@@ -44,7 +44,7 @@ class MockSatellite(Satellite):
         super(MockSatellite, self).__init__(ss=0.0, used=True, prn=prn, elevation=prn, azimuth=prn)
 
 
-class MockDevice(Device)
+class MockDevice(Device):
     def __init__(self, index):
         super(MockDevice, self).__init__(path="/dev/ttyAMA%d" % (index), 
                                          flags=SEEN_GPS, 
@@ -56,7 +56,7 @@ class MockDevice(Device)
                                          parity='N', 
                                          cycle=1, 
                                          mincycle=1,
-                                         driver_mode=0):
+                                         driver_mode=0)
 
 
 
