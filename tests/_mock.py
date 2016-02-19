@@ -7,7 +7,7 @@ Markus Juenemann, 04-Feb-2016
 
 import time
 from gpsdshm.shm import MAXCHANNELS
-from gpsdshm import Satellite
+from gpsdshm import Satellite, Device, SEEN_GPS
 
 class MockFix(object):
     def __init__(self):
@@ -42,11 +42,22 @@ class MockDop(object):
 class MockSatellite(Satellite):
     def __init__(self, prn):
         super(MockSatellite, self).__init__(ss=0.0, used=True, prn=prn, elevation=prn, azimuth=prn)
-        #self.ss = 0.0
-        #self.prn = self.PRN = prn
-        #self.used = True
-        #self.elevation = prn
-        #self.azimuth = prn
+
+
+class MockDevice(Device)
+    def __init__(self, index):
+        super(MockDevice, self).__init__(path="/dev/ttyAMA%d" % (index), 
+                                         flags=SEEN_GPS, 
+                                         driver="TODO", 
+                                         subtype="TODO", 
+                                         activated=time.time(),
+                                         baudrate=4800,
+                                         stopbits=1, 
+                                         parity='N', 
+                                         cycle=1, 
+                                         mincycle=1,
+                                         driver_mode=0):
+
 
 
 class MockShm(object):
