@@ -14,6 +14,9 @@ The steps for preparing a new release are as follows:
 
 #. Ensure that there are no open issues for this release (https://github.com/mjuenema/python-gpsdshm/issues)
 #. Merge all "feature" branches into the "develop" branch.
+#. Run ``make lint``.
+#. Run ``make test`` to check for problems.
+#. Run ``make test_gpsfake`` to run the test suite against *gpsfake* inside a Docker container.
 #. Create the ``gpsdshm/shm.i`` file by running ``make swig``.
 #. Push the 'develop" branch to Github.
 #. Fix the issue listed on Codacy (https://www.codacy.com/app/markus_2/python-gpsdshm)
