@@ -20,6 +20,8 @@ git fetch -t
 
 git checkout $BRANCH
 
+git pull origin $BRANCH
+
 PATH=/opt/gpsd/$RELEASE/bin:/opt/gpsd/$RELEASE/sbin:$PATH \
   PYTHONPATH=/opt/gpsd/$RELEASE/gps \
   python2.7 /opt/gpsd/$RELEASE/bin/gpsfake -c 0.1 -n tests/short.nmea &
