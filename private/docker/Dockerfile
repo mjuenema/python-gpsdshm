@@ -58,11 +58,17 @@ RUN cd ~ && \
     make && \
     make install
 
-VOLUME workdir /workdir
+RUN mkdir -vp /home/developer/.cache/pip /home/developer/.ccache
 
 COPY tests.run /run_tests.sh
 
 CMD /bin/bash
+
+RUN yum -y install ccache && \
+    ln -s `which ccache` /usr/local/bin/gcc && \
+    ln -s `which ccache` /usr/local/bin/g++ && \
+    ln -s `which ccache` /usr/local/bin/cc && \
+    ln -s `which ccache` /usr/local/bin/c++
 
 # Undo yum proxy
 #

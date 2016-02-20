@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 
 # Run tests against gpsfake inside Docker
 #

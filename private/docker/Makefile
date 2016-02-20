@@ -52,9 +52,12 @@ build: Dockerfile
 	             --build-arg https_proxy=$(https_proxy) \
                      -t mjuenema/pythons-gpsd-gpsdshm .
 
-test_3.%: build_3.%
-	docker run --rm -v `pwd`/workdir:/workdir mjuenema/pythons-gpsd-release-$(subst test_,,$@)-gpsdshm
-
+test: build
+	docker run -it --rm -e "BRANCH=develop" -e "RELEASE=3.15" \
+		-v `pwd`/workdir/cache:/home/developer/.cache \
+		-v `pwd`/workdir/ccache:/home/developer/.ccache \
+		-v `pwd`/workdir/tox:/home/developer/python-gpsdshm/.tox \
+		mjuenema/pythons-gpsd-gpsdshm /run_tests.sh
 
 .PHONY: Dockerfile
 Dockerfile:
