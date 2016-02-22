@@ -16,8 +16,11 @@ SEEN_RTCM2 = gpsdshm.shm.SEEN_RTCM2
 SEEN_RTCM3 = gpsdshm.shm.SEEN_RTCM3
 SEEN_AIS = gpsdshm.shm.SEEN_AIS
 
+_error = gpsdshm.shm.cvar._error
+
 
 class Fix(object):
+    """Class representing ``gpsd/gps.h:gps_fix_t``."""
 
     def __init__(self, shm):
         self.shm = shm
@@ -40,6 +43,7 @@ class Fix(object):
 
 
 class Dop(object):
+    """Class representing ``gpsd/gps.h:dop_t``."""
 
     def __init__(self, shm):
         self.shm = shm
@@ -54,6 +58,7 @@ class Dop(object):
 
 
 class Satellite(object):
+    """Class representing ``gpsd/gps.h:satellite_t``."""
     def __init__(self, ss, used, prn, elevation, azimuth):
         self.ss = self.snr = ss
         self.used = used and True
@@ -64,7 +69,11 @@ class Satellite(object):
 
 class Satellites(object):
     """List of `GpsdShmSatellite` instances.
-
+    
+       This list will always be ``gpsdshm.MAXCHANNELS`` long, regardless
+       of how many satellites are in view. The ``Satellite.prn`` attribute
+       will be zero for unused channels.
+       
     """
 
     def __init__(self, shm):
@@ -85,6 +94,7 @@ class Satellites(object):
 
 
 class Device(object):
+    """Class representing ``gpsd/gps.h:devconfig_t``."""
     def __init__(self, path, flags, driver, subtype, activated,
                  baudrate, stopbits, parity, cycle, mincycle,
                  driver_mode):
@@ -93,7 +103,15 @@ class Device(object):
 
 class Devices(object):
     """List of `GpsdShmDevice` (singular) instances.
-
+    
+       With gpsd 3.12 and later this is a list of devices, e.g. ``Device``
+       instances. Earlier versions of gpsd embedded this into a C union
+       and ``Devices`` will only provide information about the device
+       that shipped the last update. 
+       
+       This list will always be ``gpsdshm.MAXDEVICES`` long, regardless
+       of how many satellites are in view.
+       
     """
 
     def __init__(self, shm):
@@ -104,9 +122,7 @@ class Devices(object):
 
 
 class Shm(object):
-    """GPSd Shared Memory.
-
-    """
+    """GPSd Shared Memory."""
 
     def __init__(self):
 
@@ -127,5 +143,3 @@ class Shm(object):
     dev = device = property(lambda self: gpsdshm.shm.get_dev(self.shm))
     skyview_time = property(lambda self: gpsdshm.shm.get_skyview_time(self.shm))
     satellites_visible = property(lambda self: gpsdshm.shm.get_satellites_visible(self.shm))
-
-

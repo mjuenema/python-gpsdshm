@@ -34,6 +34,8 @@ char *_error = NULL;
 struct shmexport_t *shm_get() {
     int shmid;
     void *shm;
+    
+    _error = NULL;
 
     // Try to create a new shared memory segment, in case gpsd has not started yet.
     shmid = shmget((key_t)(GPSD_SHM_KEY), sizeof(struct shmexport_t), IPC_CREAT | IPC_EXCL | 0666);

@@ -22,7 +22,10 @@ import math
 
 from nose.tools import *
 
+import minimock
+
 import gpsdshm
+import gpsdshm.shm
 import time
 
 gpsd_shm = None
@@ -32,6 +35,8 @@ def setup():
     global gpsd_shm
 
     gpsd_shm = gpsdshm.Shm()
+
+    assert gpsdshm._error is None
 
     if gpsd_shm.fix.latitude != 0.0:
         sys.stderr.write('Using real gpsd data for tests...\n')
@@ -44,6 +49,25 @@ def setup():
 def test_satellites_index_error():
     gpsd_shm.satellites[gpsdshm.shm.MAXCHANNELS]
 
+def test_gpsdshm_Shm_error():
+    gpsdshm.shm.shm_get = minimock.Mock('gpsdshm.shm.shm_get')
+    gpsdshm.shm.shm_get.mock_returns = None
+    try:
+        gpsdshm.Shm()
+    except OSError:
+        minimock.restore()
+        return
+    raise
+
+@raises(OSError)
+def test_gpsdshm_error():
+    gpsdshm._error = 'test'
+    assert gpsdshm._error == 'test'
+
+    os_error = OSError('GPSd shared memory error: %s' % (gpsdshm._error))
+    assert str(os_error) == 'GPSd shared memory error: test'
+
+    raise os_error
 
 def test_gpsdshm():
 
