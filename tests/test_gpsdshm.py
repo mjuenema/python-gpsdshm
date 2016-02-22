@@ -113,30 +113,30 @@ def test_gpsdshm():
     assert isinstance(gpsd_shm.fix.epc, (float))
     assert -100.0 < gpsd_shm.fix.epc < 100.0 or math.isnan(gpsd_shm.fix.epc)
 
-    assert isinstance(gpsd_shm.dop.xdop, (float))
-    assert 0.0 < gpsd_shm.dop.xdop < 3.0
+    assert isinstance(gpsd_shm.dop.xdop, (float)) 
+    assert 0.0 < gpsd_shm.dop.xdop < 10.0 or math.isnan(gpsd_shm.dop.xdop)
 
     assert isinstance(gpsd_shm.dop.ydop, (float))
-    assert 0.0 < gpsd_shm.dop.ydop < 3.3
+    assert 0.0 < gpsd_shm.dop.ydop < 10.0 or math.isnan(gpsd_shm.dop.ydop)
 
     assert isinstance(gpsd_shm.dop.pdop, (float))
-    assert 0.0 < gpsd_shm.dop.pdop < 3.0
+    assert 0.0 < gpsd_shm.dop.pdop < 10.0 or math.isnan(gpsd_shm.dop.pdop)
 
     assert isinstance(gpsd_shm.dop.hdop, (float))
-    assert 0.0 < gpsd_shm.dop.hdop < 3.0
+    assert 0.0 < gpsd_shm.dop.hdop < 10.0 or math.isnan(gpsd_shm.dop.hdop)
 
     assert isinstance(gpsd_shm.dop.vdop, (float))
-    assert 0.0 < gpsd_shm.dop.vdop < 3.0
+    assert 0.0 < gpsd_shm.dop.vdop < 10.0 or math.isnan(gpsd_shm.dop.vdop)
 
     assert isinstance(gpsd_shm.dop.tdop, (float))
-    assert 0.0 < gpsd_shm.dop.tdop < 5.5
+    assert 0.0 < gpsd_shm.dop.tdop < 10.0 or math.isnan(gpsd_shm.dop.tdop)
 
     assert isinstance(gpsd_shm.dop.gdop, (float))
-    assert 0.0 < gpsd_shm.dop.gdop < 9.3
+    assert 0.0 < gpsd_shm.dop.gdop < 10.0 or math.isnan(gpsd_shm.dop.gdop)
 
     for i in range(gpsdshm.shm.MAXCHANNELS):
         assert isinstance(gpsd_shm.satellites[i].ss, (float))
-        assert 0.0 <= gpsd_shm.satellites[i].ss < 50.
+        assert 0.0 <= gpsd_shm.satellites[i].ss < 50.0
 
         assert isinstance(gpsd_shm.satellites[i].used, (bool))
 

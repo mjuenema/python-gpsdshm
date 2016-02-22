@@ -10,23 +10,29 @@
 # Markus Juenemann, 20-Feb-2016
 
 
-BRANCH=${BRANCH:-develop}
+#BRANCH=${BRANCH:-develop}
 RELEASE=${RELEASE:-3.16}
 
 
-cd /home/developer/python-gpsdshm
+#cd /home/developer/python-gpsdshm
 
-git fetch -t
+#git fetch -t
 
-git checkout $BRANCH
+#git checkout $BRANCH
 
-git pull origin $BRANCH
+#git pull origin $BRANCH
+
+cd /home/developer/src
+rm .coverage
+
+chmod 777 /dev/pts
 
 PATH=/opt/gpsd/$RELEASE/bin:/opt/gpsd/$RELEASE/sbin:$PATH \
   PYTHONPATH=/opt/gpsd/$RELEASE/gps \
   python2.7 /opt/gpsd/$RELEASE/bin/gpsfake -c 0.1 -n tests/short.nmea &
 
+sleep 5
+
+chmod -v 666 /dev/pts/*
 
 CPATH=/opt/gpsd/$RELEASE/include TOX_TESTENV_PASSENV=CPATH make tox
-
-pkill -f gps
