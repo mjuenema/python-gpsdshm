@@ -4,23 +4,12 @@
 #
 # The following environment variables should be set
 #
-# BRANCH	# python-gpsdshm branch, e.g. 'master', 'develop'
 # RELEASE	# gpsd release, e.g. '3.16'
 #
 # Markus Juenemann, 20-Feb-2016
 
 
-#BRANCH=${BRANCH:-develop}
 RELEASE=${RELEASE:-3.16}
-
-
-#cd /home/developer/python-gpsdshm
-
-#git fetch -t
-
-#git checkout $BRANCH
-
-#git pull origin $BRANCH
 
 cd /home/developer/src
 rm .coverage
@@ -29,7 +18,8 @@ chmod 777 /dev/pts
 
 PATH=/opt/gpsd/$RELEASE/bin:/opt/gpsd/$RELEASE/sbin:$PATH \
   PYTHONPATH=/opt/gpsd/$RELEASE/gps \
-  python2.7 /opt/gpsd/$RELEASE/bin/gpsfake -c 0.1 -n tests/short.nmea &
+  GPSD_HOME=/opt/gpsd/$RELEASE/bin \
+  python2.7 /opt/gpsd/3.16/bin/gpsfake -c 0.1 -n tests/short.nmea &
 
 sleep 5
 
