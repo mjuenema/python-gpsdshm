@@ -27,9 +27,11 @@ rm .coverage
 
 chmod 777 /dev/pts
 
-PATH=/opt/gpsd/$RELEASE/bin:/opt/gpsd/$RELEASE/sbin:$PATH \
-  PYTHONPATH=/opt/gpsd/$RELEASE/gps \
-  python2.7 /opt/gpsd/$RELEASE/bin/gpsfake -c 0.1 -n tests/short.nmea &
+#PATH=/opt/gpsd/$RELEASE/bin:/opt/gpsd/$RELEASE/sbin:$PATH \
+#  PYTHONPATH=/opt/gpsd/$RELEASE/gps \
+#  python2.7 /opt/gpsd/$RELEASE/bin/gpsfake -c 0.1 -n tests/short.nmea &
+
+GPSD_HOME=/opt/gpsd/$RELEASE/sbin /opt/gpsd/3.16/bin/gpsfake -c 0.1 -n tests/short.nmea &
 
 sleep 5
 
