@@ -1,6 +1,8 @@
 
 #include "gps.h"
 
+char *_error;
+
 /* shared memory */
 struct shmexport_t *shm_get();
 

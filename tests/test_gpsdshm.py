@@ -33,6 +33,8 @@ def setup():
 
     gpsd_shm = gpsdshm.Shm()
 
+    assert gpsdshm._error is None
+
     if gpsd_shm.fix.latitude != 0.0:
         sys.stderr.write('Using real gpsd data for tests...\n')
     else:
@@ -44,6 +46,15 @@ def setup():
 def test_satellites_index_error():
     gpsd_shm.satellites[gpsdshm.shm.MAXCHANNELS]
 
+@raises(OSError)
+def test_gpsdshm_error():
+    gpsdshm._error = 'test'
+    assert gpsdshm._error == 'test'
+
+    os_error = OSError('GPSd shared memory error: %s' % (gpsdshm._error))
+    assert str(os_error) == 'GPSd shared memory error: test'
+
+    raise os_error
 
 def test_gpsdshm():
 

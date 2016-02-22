@@ -16,6 +16,8 @@ SEEN_RTCM2 = gpsdshm.shm.SEEN_RTCM2
 SEEN_RTCM3 = gpsdshm.shm.SEEN_RTCM3
 SEEN_AIS = gpsdshm.shm.SEEN_AIS
 
+_error = gpsdshm.shm.cvar._error
+
 
 class Fix(object):
 
