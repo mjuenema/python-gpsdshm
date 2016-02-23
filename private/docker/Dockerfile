@@ -4,7 +4,7 @@
 #
 # Markus Juenemann, 04-Feb-2016
 
-FROM mjuenema/pythons
+FROM mjuenema/pythons:latest
 MAINTAINER Markus Juenemann <markus@juenemann.net>
 USER root
 
@@ -16,7 +16,7 @@ RUN yum clean all
 RUN yum -y install python-devel chrpath automake pcre-devel \
            bison byacc gcc-c++ libxslt xmlto
 
-RUN python2.7 install --egg SCons
+RUN pip2.7 install --egg SCons
 
 RUN git clone http://git.savannah.gnu.org/r/gpsd.git
 
@@ -24,31 +24,31 @@ RUN git clone http://git.savannah.gnu.org/r/gpsd.git
 RUN cd ~/gpsd && \
     git checkout release-3.16 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.16 && \
+    python2.7 /usr/local/bin/scons shared=yes shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.16 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.15 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.15 && \
+    python2.7 /usr/local/bin/scons shared=yes shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.15 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.14 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.14 && \
+    python2.7 /usr/local/bin/scons shared=yes shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.14 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.13 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.13 && \
+    python2.7 /usr/local/bin/scons shared=yes shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.13 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.12 && \
     git clean -f && \
-    python2.7 /usr/local/bin/scons minimal=yes netfeed=yes shm_export=yes python=no leapfetch=yes prefix=/opt/gpsd/3.12 install && \
+    python2.7 /usr/local/bin/scons minimal=yes shared=yes netfeed=yes shm_export=yes python=no leapfetch=yes prefix=/opt/gpsd/3.12 install && \
     cp -v *.h /opt/gpsd/3.12/include && \
     mkdir -vp /opt/gpsd/3.12/python && \
     cp -v gps/* /opt/gpsd/3.12/python
@@ -56,71 +56,72 @@ RUN cd ~/gpsd && \
 RUN cd ~/gpsd && \
     git checkout release-3.11 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.11 && \
+    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.11 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.10 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.10 && \
+    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.10 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.9 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.9 && \
+    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.9 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.8 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.8 && \
+    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.8 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.7 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.7 && \
+    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.7 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.6 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.6 && \
+    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.6 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.5 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.5 && \
+    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.5 && \
     python2.7 /usr/local/bin/scons install
 
 # gpsd 3.4 needs some work-arounds leapseconds.cache file.
 RUN cd ~/gpsd && \
     git checkout release-3.4 && \
     git clean -f &&  rm -fv leapseconds.cache && \
-    python2.7 /usr/local/bin/scons minimal=yes netfeed=no shm_export=yes python=no leapfetch=yes prefix=/opt/gpsd/3.4 install && \
+    python2.7 /usr/local/bin/scons shared=yes minimal=yes netfeed=yes shm_export=yes python=no leapfetch=yes prefix=/opt/gpsd/3.4 install && \
     git checkout -- leapseconds.cache
 
 RUN cd ~/gpsd && \
     git checkout release-3.3 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.3 && \
+    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.3 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.2 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.2 && \
+    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.2 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.1 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.1 && \
+    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.1 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
+    git checkout release-3.0 && \
     python2.7 /usr/local/bin/scons -c && \
     python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.0 && \
     python2.7 /usr/local/bin/scons install
