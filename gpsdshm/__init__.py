@@ -70,7 +70,7 @@ class Satellite(object):
 
 class Satellites(object):
     """List of `GpsdShmSatellite` instances.
-  
+
        This list will always be ``gpsdshm.MAXCHANNELS`` long, regardless
        of how many satellites are in view. The ``Satellite.prn`` attribute
        will be zero for unused channels.
@@ -142,6 +142,9 @@ class Devices(object):
         cycle = gpsdshm.shm.get_device_cycle(self.shm, index)
         mincycle = gpsdshm.shm.get_device_mincycle(self.shm, index)
         driver_mode = gpsdshm.shm.get_device_driver_mode(self.shm, index)
+
+        return Device(path, flags, driver, subtype, activated, baudrate,
+                      stopbits, parity, cycle, mincycle, driver_mode)
 
 
 class Shm(object):

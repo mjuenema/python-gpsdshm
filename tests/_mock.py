@@ -53,7 +53,7 @@ class MockDevice(Device):
                                          activated=time.time(),
                                          baudrate=4800,
                                          stopbits=1,
-                                         parity='N', 
+                                         parity='N',
                                          cycle=1.0,
                                          mincycle=1.0,
                                          driver_mode=0)
