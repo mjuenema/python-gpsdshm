@@ -1,0 +1,6 @@
+; Send CTRL-C to stop Docker container
+>>^C
+
+@35
+; Wait until Docker container has stopped
+>date

@@ -1,30 +1,18 @@
 
+# Docker tag is the branch with 'master' replaced with 'latest'
+#
+BRANCH := $(subst /,_,$(shell git branch | awk '$$1 ~ /^\*/ { print $$2 }'))
+DOCKERTAG := $(subst master,latest,$(BRANCH))
 
 all: help
 
 help:
-	@echo "make build           - Build all Docker image"
-	@echo "make test            - Start all Docker images and run tests"
+	@echo "make build           - Build Docker image"
+	@echo "make test            - Start Docker image and run tests (mock or gpsfake)"
+	@echo "make gpsfake         - Start Docker image and run tests (gpsfake)"
+	@echo "make run             - Start Docker image"
 	@echo "make clean_failed    - Delete failed Docker containers"
 	@echo "make clean_dangling  - Delete dangling Docker images"
-
-#build: build_3.0 \
-#       build_3.1 \
-#       build_3.2 \
-#       build_3.3 \
-#       build_3.4 \
-#       build_3.5 \
-#       build_3.6 \
-#       build_3.7 \
-#       build_3.8 \
-#       build_3.9 \
-#       build_3.10 \
-#       build_3.11 \
-#       build_3.12 \
-#       build_3.13 \
-#       build_3.14 \
-#       build_3.15 \
-#       build_3.16
 
 test: test_3.0 \
       test_3.1 \
@@ -44,28 +32,31 @@ test: test_3.0 \
       test_3.15 \
       test_3.16
 
-#build_3.%: Dockerfile
-#	docker build --build-arg RELEASE=release-$(subst build_,,$@) --build-arg http_proxy=$(http_proxy) \
-#	             --build-arg https_proxy=$(https_proxy) -t mjuenema/pythons-gpsd-release-$(subst build_,,$@)-gpsdshm .
+gpsfake: gpsfake_3.0 \
+         gpsfake_3.1
+
+
 build: Dockerfile
 	docker build --build-arg http_proxy=$(http_proxy) \
 	             --build-arg https_proxy=$(https_proxy) \
-                     -t mjuenema/pythons-gpsd-gpsdshm .
-
-#test: build
-#	docker run -it --rm -e "BRANCH=develop" -e "RELEASE=3.15" \
-#		-v `pwd`/workdir/cache:/home/developer/.cache \
-#		-v `pwd`/workdir/ccache:/home/developer/.ccache \
-#		-v `pwd`/workdir/tox:/home/developer/python-gpsdshm/.tox \
-#		-v `pwd`/../..:/home/developer/src \
-#		mjuenema/pythons-gpsd-gpsdshm /run_tests.sh
+                     -t mjuenema/python-gpsdshm:$(DOCKERTAG) .
 
 test_3.%: build
-	docker run -it --rm -e "BRANCH=`git branch | awk '$$1 ~ /\*/ { print $$2 }'`" -e "RELEASE=$(subst test_,,$@)" \
+	docker run -it --rm -e "RELEASE=$(subst test_,,$@)" \
 		-v `pwd`/workdir/cache:/home/developer/.cache \
 		-v `pwd`/workdir/ccache:/home/developer/.ccache \
 		-v `pwd`/../..:/home/developer/src \
-		mjuenema/pythons-gpsd-gpsdshm /run_tests.sh
+		mjuenema/python-gpsdshm:$(DOCKERTAG) /run_tests.sh
+
+gpsfake_3.%: build
+	EL_RELEASE=$(subst gpsfake_,,$@) EL_DOCKERTAG=$(DOCKERTAG) ./expect-lite gpsfake.elt
+
+run:
+	docker run -it --rm \
+		-v `pwd`/workdir/cache:/home/developer/.cache \
+		-v `pwd`/workdir/ccache:/home/developer/.ccache \
+		-v `pwd`/../..:/home/developer/src \
+		mjuenema/python-gpsdshm:$(DOCKERTAG) /bin/bash
 	
 
 .PHONY: Dockerfile

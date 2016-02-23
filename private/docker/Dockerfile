@@ -4,7 +4,7 @@
 #
 # Markus Juenemann, 04-Feb-2016
 
-FROM mjuenema/pythons
+FROM mjuenema/pythons:latest
 MAINTAINER Markus Juenemann <markus@juenemann.net>
 USER root
 
@@ -13,43 +13,42 @@ USER root
 RUN [ "$http_proxy" == "" ] || echo "proxy=$http_proxy" >> /etc/yum.conf
 RUN yum clean all
 
-# Install scons
-#
-RUN pip2.7 install SCons
-
 RUN yum -y install python-devel chrpath automake pcre-devel \
            bison byacc gcc-c++ libxslt xmlto
 
+RUN pip2.7 install --egg SCons
+
 RUN git clone http://git.savannah.gnu.org/r/gpsd.git
 
+# gpsd-3.16 is used for gpsfake
 RUN cd ~/gpsd && \
     git checkout release-3.16 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.16 && \
+    python2.7 /usr/local/bin/scons shared=yes shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.16 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.15 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.15 && \
+    python2.7 /usr/local/bin/scons shared=yes shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.15 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.14 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.14 && \
+    python2.7 /usr/local/bin/scons shared=yes shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.14 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.13 && \
     python2.7 /usr/local/bin/scons -c && \
-    python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.13 && \
+    python2.7 /usr/local/bin/scons shared=yes shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.13 && \
     python2.7 /usr/local/bin/scons install
 
 RUN cd ~/gpsd && \
     git checkout release-3.12 && \
     git clean -f && \
-    python2.7 /usr/local/bin/scons minimal=yes netfeed=yes shm_export=yes python=yes leapfetch=yes prefix=/opt/gpsd/3.12 install && \
+    python2.7 /usr/local/bin/scons minimal=yes shared=yes netfeed=yes shm_export=yes python=no leapfetch=yes prefix=/opt/gpsd/3.12 install && \
     cp -v *.h /opt/gpsd/3.12/include && \
     mkdir -vp /opt/gpsd/3.12/python && \
     cp -v gps/* /opt/gpsd/3.12/python
@@ -100,7 +99,7 @@ RUN cd ~/gpsd && \
 RUN cd ~/gpsd && \
     git checkout release-3.4 && \
     git clean -f &&  rm -fv leapseconds.cache && \
-    python2.7 /usr/local/bin/scons minimal=yes netfeed=yes shm_export=yes python=yes leapfetch=yes prefix=/opt/gpsd/3.4 install && \
+    python2.7 /usr/local/bin/scons shared=yes minimal=yes netfeed=yes shm_export=yes python=no leapfetch=yes prefix=/opt/gpsd/3.4 install && \
     git checkout -- leapseconds.cache
 
 RUN cd ~/gpsd && \
@@ -127,6 +126,14 @@ RUN cd ~/gpsd && \
     python2.7 /usr/local/bin/scons shm_export=yes python=yes leapfetch=no prefix=/opt/gpsd/3.0 && \
     python2.7 /usr/local/bin/scons install
 
+#    git checkout release-3.0 && \
+#    git clean -f && \
+#    python2.7 /usr/local/bin/scons shm_export=yes leapfetch=yes python=no prefix=/opt/gpsd/3.0 install
+
+#    python2.7 /usr/local/bin/scons -c && \
+#    python2.7 /usr/local/bin/scons shm_export=yes python=no leapfetch=no prefix=/opt/gpsd/3.0 && \
+#    python2.7 /usr/local/bin/scons install
+
 #RUN cd ~ && \
 #    git clone https://github.com/mjuenema/python-gpsdshm.git
 
@@ -149,8 +156,14 @@ RUN yum -y install ccache && \
     ln -s `which ccache` /usr/local/bin/cc && \
     ln -s `which ccache` /usr/local/bin/c++
 
+#RUN cd ~ && \
+#    wget https://pypi.python.org/packages/source/S/SCons/scons-2.4.1.tar.gz && \
+#    tar xvfz scons-2.4.1.tar.gz && \
+#    cd scons-2.4.1 && \
+#    python2.7 setup.py install
+
 # Undo yum proxy
 #
 RUN [ "$http_proxy" == "" ] || sed --in-place 's/^proxy=http.*$//g' /etc/yum.conf
-    
+
 COPY tests.run /run_tests.sh
