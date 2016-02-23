@@ -16,6 +16,8 @@ RUN yum clean all
 RUN yum -y install python-devel chrpath automake pcre-devel \
            bison byacc gcc-c++ libxslt xmlto
 
+RUN python2.7 install --egg SCons
+
 RUN git clone http://git.savannah.gnu.org/r/gpsd.git
 
 # gpsd-3.16 is used for gpsfake
@@ -153,11 +155,11 @@ RUN yum -y install ccache && \
     ln -s `which ccache` /usr/local/bin/cc && \
     ln -s `which ccache` /usr/local/bin/c++
 
-RUN cd ~ && \
-    wget https://pypi.python.org/packages/source/S/SCons/scons-2.4.1.tar.gz && \
-    tar xvfz scons-2.4.1.tar.gz && \
-    cd scons-2.4.1 && \
-    python2.7 setup.py install
+#RUN cd ~ && \
+#    wget https://pypi.python.org/packages/source/S/SCons/scons-2.4.1.tar.gz && \
+#    tar xvfz scons-2.4.1.tar.gz && \
+#    cd scons-2.4.1 && \
+#    python2.7 setup.py install
 
 # Undo yum proxy
 #
