@@ -137,7 +137,7 @@ def test_gpsdshm():
     assert isinstance(gpsd_shm.fix.epc, (float))
     assert -100.0 < gpsd_shm.fix.epc < 100.0 or math.isnan(gpsd_shm.fix.epc)
 
-    assert isinstance(gpsd_shm.dop.xdop, (float)) 
+    assert isinstance(gpsd_shm.dop.xdop, (float))
     assert 0.0 < gpsd_shm.dop.xdop < 10.0 or math.isnan(gpsd_shm.dop.xdop)
 
     assert isinstance(gpsd_shm.dop.ydop, (float))

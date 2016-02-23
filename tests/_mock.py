@@ -46,15 +46,15 @@ class MockSatellite(Satellite):
 
 class MockDevice(Device):
     def __init__(self, index):
-        super(MockDevice, self).__init__(path="/dev/ttyAMA%d" % (index), 
-                                         flags=SEEN_GPS, 
-                                         driver="TODO", 
-                                         subtype="TODO", 
+        super(MockDevice, self).__init__(path="/dev/ttyAMA%d" % (index),
+                                         flags=SEEN_GPS,
+                                         driver="TODO",
+                                         subtype="TODO",
                                          activated=time.time(),
                                          baudrate=4800,
-                                         stopbits=1, 
+                                         stopbits=1,
                                          parity='N', 
-                                         cycle=1.0, 
+                                         cycle=1.0,
                                          mincycle=1.0,
                                          driver_mode=0)
 

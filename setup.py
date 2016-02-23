@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""setup.py for python-gpsdshm."""
 
 NAME = 'gpsdshm'
 VERSION = '0.1.1'
@@ -9,21 +10,21 @@ DESCRIPTION = 'Python interface to gpsd shared memory'
 URL = 'https://github.com/mjuenema/python-gpsdshm'
 
 from setuptools import setup, Extension
-shm_module = Extension('gpsdshm._shm', sources=['gpsdshm/shm.c', 'gpsdshm/shm_wrap.c'],)
+shmmodule = Extension('gpsdshm._shm', sources=['gpsdshm/shm.c', 'gpsdshm/shm_wrap.c'],)
 
 from os.path import join, dirname
 
-readme = open(join(dirname(__file__), 'README.rst')).read()
-history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+README = open(join(dirname(__file__), 'README.rst')).read()
+HISTORY = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
-requirements = open(join(dirname(__file__), 'requirements.txt')).read().split()
-test_requirements = open(join(dirname(__file__), 'test_requirements.txt')).read().split()
+REQUIREMENTS = open(join(dirname(__file__), 'requirements.txt')).read().split()
+TEST_REQUIREMENTS = open(join(dirname(__file__), 'test_requirements.txt')).read().split()
 
 setup(
     name=NAME,
     version=VERSION,
     description=DESCRIPTION,
-    long_description=readme + '\n\n' + history,
+    long_description=README + '\n\n' + HISTORY,
     author=AUTHOR,
     author_email=EMAIL,
     url=URL,
@@ -32,9 +33,9 @@ setup(
     ],
     package_dir={NAME: NAME},
     include_package_data=True,
-    install_requires=requirements,
-    ext_modules = [shm_module],
-    py_modules = [NAME],
+    install_requires=REQUIREMENTS,
+    ext_modules=[shmmodule],
+    py_modules=[NAME],
     license=LICENSE,
     zip_safe=False,
     keywords='gpsd, shared memory',
@@ -55,5 +56,5 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     test_suite='tests',
-    tests_require=test_requirements
+    tests_require=TEST_REQUIREMENTS
 )

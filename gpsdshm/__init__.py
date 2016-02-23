@@ -70,11 +70,10 @@ class Satellite(object):
 
 class Satellites(object):
     """List of `GpsdShmSatellite` instances.
-    
+  
        This list will always be ``gpsdshm.MAXCHANNELS`` long, regardless
        of how many satellites are in view. The ``Satellite.prn`` attribute
        will be zero for unused channels.
-       
     """
 
     def __init__(self, shm):
@@ -118,11 +117,10 @@ class Devices(object):
        With gpsd 3.12 and later this is a list of devices, e.g. ``Device``
        instances. Earlier versions of gpsd embedded this into a C union
        and ``Devices`` will only provide information about the device
-       that shipped the last update. 
+       that shipped the last update.
        
        This list will always be ``gpsdshm.MAXDEVICES`` long, regardless
        of how many satellites are in view.
-       
     """
 
     def __init__(self, shm):
@@ -134,16 +132,16 @@ class Devices(object):
             raise IndexError
 
         path = gpsdshm.shm.get_device_path(self.shm, index)
-        #flags = gpsdshm.shm.get_device_flags(self.shm, index)
-        #driver = gpsdshm.shm.get_device_driver(self.shm, index)
-        #subtype = gpsdshm.shm.get_device_subtype(self.shm, index)
-        #activated, = gpsdshm.shm.get_device_activated(self.shm, index)
-        #baudrate = gpsdshm.shm.get_device_baudrate(self.shm, index)
-        #stopbits = gpsdshm.shm.get_device_stopbits(self.shm, index)
-        #parity = gpsdshm.shm.get_device_parity(self.shm, index)
-        #cycle = gpsdshm.shm.get_device_cycle(self.shm, index)
-        #mincycle = gpsdshm.shm.get_device_mincycle(self.shm, index)
-        #driver_mode = gpsdshm.shm.get_device_driver_mode(self.shm, index)
+        flags = gpsdshm.shm.get_device_flags(self.shm, index)
+        driver = gpsdshm.shm.get_device_driver(self.shm, index)
+        subtype = gpsdshm.shm.get_device_subtype(self.shm, index)
+        activated, = gpsdshm.shm.get_device_activated(self.shm, index)
+        baudrate = gpsdshm.shm.get_device_baudrate(self.shm, index)
+        stopbits = gpsdshm.shm.get_device_stopbits(self.shm, index)
+        parity = gpsdshm.shm.get_device_parity(self.shm, index)
+        cycle = gpsdshm.shm.get_device_cycle(self.shm, index)
+        mincycle = gpsdshm.shm.get_device_mincycle(self.shm, index)
+        driver_mode = gpsdshm.shm.get_device_driver_mode(self.shm, index)
 
 
 class Shm(object):
