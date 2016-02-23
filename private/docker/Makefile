@@ -68,6 +68,6 @@ clean_dangling:
 		docker rmi `docker images -q -f dangling=true`
 
 clean_failed:
-	[ "`docker ps -q -a -f exited=1 -f exited=2 -f exited=137 -f exited=130 -f exited=128 -f exited=8`" != "" ] && \
-		docker rm `docker ps -q -a -f exited=1 -f exited=2 -f exited=137 -f exited=130 -f exited=128 -f exited=8`
+	[ "`docker ps -a | egrep 'Exited \([^0]' | cut -c 1-16`" != "" ] && \
+		docker rm `docker ps -a | egrep 'Exited \([^0]' | cut -c 1-16`	
 	
