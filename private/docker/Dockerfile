@@ -13,10 +13,6 @@ USER root
 RUN [ "$http_proxy" == "" ] || echo "proxy=$http_proxy" >> /etc/yum.conf
 RUN yum clean all
 
-# Install scons
-#
-RUN pip2.7 install SCons
-
 RUN yum -y install python-devel chrpath automake pcre-devel \
            bison byacc gcc-c++ libxslt xmlto
 
@@ -157,16 +153,14 @@ RUN yum -y install ccache && \
     ln -s `which ccache` /usr/local/bin/cc && \
     ln -s `which ccache` /usr/local/bin/c++
 
+RUN cd ~ && \
+    wget https://pypi.python.org/packages/source/S/SCons/scons-2.4.1.tar.gz && \
+    tar xvfz scons-2.4.1.tar.gz && \
+    cd scons-2.4.1 && \
+    python2.7 setup.py install
+
 # Undo yum proxy
 #
 RUN [ "$http_proxy" == "" ] || sed --in-place 's/^proxy=http.*$//g' /etc/yum.conf
 
-# Install minimock into each environment
-#
-RUN pip2.6 install minimock
-RUN pip2.7 install minimock
-RUN pip3.3 install minimock
-#RUN pip3.4 install minimock
-RUN pip3.5 install minimock
-    
 COPY tests.run /run_tests.sh
