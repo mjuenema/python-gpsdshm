@@ -6,7 +6,7 @@ Markus Juenemann, 04-Feb-2016
 """
 
 import time
-from gpsdshm.shm import MAXCHANNELS
+from gpsdshm.shm import MAXCHANNELS, MAXUSERDEVS
 from gpsdshm import Satellite, Device, SEEN_GPS
 
 class MockFix(object):
@@ -54,8 +54,8 @@ class MockDevice(Device):
                                          baudrate=4800,
                                          stopbits=1, 
                                          parity='N', 
-                                         cycle=1, 
-                                         mincycle=1,
+                                         cycle=1.0, 
+                                         mincycle=1.0,
                                          driver_mode=0)
 
 
@@ -71,3 +71,5 @@ class MockShm(object):
         self.dop = MockDop()
         self.skyview_time = float('nan')
         self.satellites = [MockSatellite(prn) for prn in range(MAXCHANNELS)]
+        self.devices = [MockDevice(index) for index in range(MAXUSERDEVS)]
+        self.ndevices = MAXUSERDEVS

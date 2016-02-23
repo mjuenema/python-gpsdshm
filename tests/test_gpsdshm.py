@@ -158,7 +158,7 @@ def test_gpsdshm():
     assert isinstance(gpsd_shm.dop.gdop, (float))
     assert 0.0 < gpsd_shm.dop.gdop < 10.0 or math.isnan(gpsd_shm.dop.gdop)
 
-    for i in range(gpsdshm.shm.MAXCHANNELS):
+    for i in range(gpsdshm.MAXCHANNELS):
         assert isinstance(gpsd_shm.satellites[i].ss, (float))
         assert 0.0 <= gpsd_shm.satellites[i].ss < 50.0
 
@@ -175,3 +175,30 @@ def test_gpsdshm():
 
         assert isinstance(gpsd_shm.satellites[i].azimuth, (int))
         assert 0 <= gpsd_shm.satellites[i].azimuth , 360.0
+
+    assert isinstance(gpsd_shm.ndevices, (int))
+
+    for i in range(gpsdshm.MAXUSERDEVS):
+        assert isinstance(gpsd_shm.devices[i].path, (str))
+
+        assert isinstance(gpsd_shm.devices[i].flags, (int))
+
+        assert isinstance(gpsd_shm.devices[i].driver, (str))
+
+        assert isinstance(gpsd_shm.devices[i].subtype, (str))
+
+        assert isinstance(gpsd_shm.devices[i].activated, (float))
+
+        assert isinstance(gpsd_shm.devices[i].baudrate, (int))
+
+        assert isinstance(gpsd_shm.devices[i].stopbits, (int))
+        assert gpsd_shm.devices[i].stopbits in [0, 1, 2]
+
+        assert isinstance(gpsd_shm.devices[i].parity, (str))
+        assert gpsd_shm.devices[i].parity in ['N', 'O', 'E']
+
+        assert isinstance(gpsd_shm.devices[i].cycle, (float))
+
+        assert isinstance(gpsd_shm.devices[i].mincycle, (float))
+
+        assert isinstance(gpsd_shm.devices[i].driver_mode, (int))
