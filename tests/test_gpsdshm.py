@@ -47,7 +47,11 @@ def setup():
 
 @raises(IndexError)
 def test_satellites_index_error():
-    gpsd_shm.satellites[gpsdshm.shm.MAXCHANNELS]
+    print gpsd_shm.satellites[gpsdshm.shm.MAXCHANNELS]
+
+@raises(IndexError)
+def test_devices_index_error():
+    print gpsd_shm.devices[gpsdshm.shm.MAXUSERDEVS]
 
 def test_gpsdshm_Shm_error():
     gpsdshm.shm.shm_get = minimock.Mock('gpsdshm.shm.shm_get')
@@ -57,7 +61,7 @@ def test_gpsdshm_Shm_error():
     except OSError:
         minimock.restore()
         return
-    raise
+    raise Exception('gpsdshm.shm.shm_get did nto raise OSError')
 
 @raises(OSError)
 def test_gpsdshm_error():
@@ -137,7 +141,7 @@ def test_gpsdshm():
     assert isinstance(gpsd_shm.fix.epc, (float))
     assert -100.0 < gpsd_shm.fix.epc < 100.0 or math.isnan(gpsd_shm.fix.epc)
 
-    assert isinstance(gpsd_shm.dop.xdop, (float)) 
+    assert isinstance(gpsd_shm.dop.xdop, (float))
     assert 0.0 < gpsd_shm.dop.xdop < 10.0 or math.isnan(gpsd_shm.dop.xdop)
 
     assert isinstance(gpsd_shm.dop.ydop, (float))
@@ -158,7 +162,7 @@ def test_gpsdshm():
     assert isinstance(gpsd_shm.dop.gdop, (float))
     assert 0.0 < gpsd_shm.dop.gdop < 10.0 or math.isnan(gpsd_shm.dop.gdop)
 
-    for i in range(gpsdshm.shm.MAXCHANNELS):
+    for i in range(gpsdshm.MAXCHANNELS):
         assert isinstance(gpsd_shm.satellites[i].ss, (float))
         assert 0.0 <= gpsd_shm.satellites[i].ss < 50.0
 
@@ -175,3 +179,30 @@ def test_gpsdshm():
 
         assert isinstance(gpsd_shm.satellites[i].azimuth, (int))
         assert 0 <= gpsd_shm.satellites[i].azimuth , 360.0
+
+    assert isinstance(gpsd_shm.ndevices, (int))
+
+    for i in range(gpsdshm.MAXUSERDEVS):
+        assert isinstance(gpsd_shm.devices[i].path, (str)) or gpsd_shm.devices[i].path is None
+
+        assert isinstance(gpsd_shm.devices[i].flags, (int))
+
+        assert isinstance(gpsd_shm.devices[i].driver, (str))
+
+        assert isinstance(gpsd_shm.devices[i].subtype, (str))
+
+        assert isinstance(gpsd_shm.devices[i].activated, (float))
+
+        assert isinstance(gpsd_shm.devices[i].baudrate, (int))
+
+        assert isinstance(gpsd_shm.devices[i].stopbits, (int))
+        assert gpsd_shm.devices[i].stopbits in [0, 1, 2]
+
+        assert isinstance(gpsd_shm.devices[i].parity, (str)) or gpsd_shm.devices[i].parity is None
+        assert gpsd_shm.devices[i].parity in ['N', 'O', 'E', None]
+
+        assert isinstance(gpsd_shm.devices[i].cycle, (float))
+
+        assert isinstance(gpsd_shm.devices[i].mincycle, (float))
+
+        assert isinstance(gpsd_shm.devices[i].driver_mode, (int))
