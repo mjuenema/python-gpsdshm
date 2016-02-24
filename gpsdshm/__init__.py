@@ -135,7 +135,7 @@ class Devices(object):
         flags = gpsdshm.shm.get_device_flags(self.shm, index)
         driver = gpsdshm.shm.get_device_driver(self.shm, index)
         subtype = gpsdshm.shm.get_device_subtype(self.shm, index)
-        activated, = gpsdshm.shm.get_device_activated(self.shm, index)
+        activated = gpsdshm.shm.get_device_activated(self.shm, index)
         baudrate = gpsdshm.shm.get_device_baudrate(self.shm, index)
         stopbits = gpsdshm.shm.get_device_stopbits(self.shm, index)
         parity = gpsdshm.shm.get_device_parity(self.shm, index)

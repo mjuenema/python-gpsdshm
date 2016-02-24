@@ -49,6 +49,10 @@ def setup():
 def test_satellites_index_error():
     print gpsd_shm.satellites[gpsdshm.shm.MAXCHANNELS]
 
+@raises(IndexError)
+def test_devices_index_error():
+    print gpsd_shm.devices[gpsdshm.shm.MAXUSERDEVS]
+
 def test_gpsdshm_Shm_error():
     gpsdshm.shm.shm_get = minimock.Mock('gpsdshm.shm.shm_get')
     gpsdshm.shm.shm_get.mock_returns = None
@@ -179,7 +183,7 @@ def test_gpsdshm():
     assert isinstance(gpsd_shm.ndevices, (int))
 
     for i in range(gpsdshm.MAXUSERDEVS):
-        assert isinstance(gpsd_shm.devices[i].path, (str))
+        assert isinstance(gpsd_shm.devices[i].path, (str)) or gpsd_shm.devices[i].path is None
 
         assert isinstance(gpsd_shm.devices[i].flags, (int))
 
@@ -194,8 +198,8 @@ def test_gpsdshm():
         assert isinstance(gpsd_shm.devices[i].stopbits, (int))
         assert gpsd_shm.devices[i].stopbits in [0, 1, 2]
 
-        assert isinstance(gpsd_shm.devices[i].parity, (str))
-        assert gpsd_shm.devices[i].parity in ['N', 'O', 'E']
+        assert isinstance(gpsd_shm.devices[i].parity, (str)) or gpsd_shm.devices[i].parity is None
+        assert gpsd_shm.devices[i].parity in ['N', 'O', 'E', None]
 
         assert isinstance(gpsd_shm.devices[i].cycle, (float))
 
