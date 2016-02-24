@@ -5,17 +5,24 @@ Python interface to GPSd Shared Memory.
 
 import gpsdshm.shm
 
-MAXCHANNELS = gpsdshm.shm.MAXCHANNELS
-MAXUSERDEVS = gpsdshm.shm.MAXUSERDEVS
 GPSD_API_MAJOR_VERSION = gpsdshm.shm.GPSD_API_MAJOR_VERSION
 GPSD_API_MINOR_VERSION = gpsdshm.shm.GPSD_API_MINOR_VERSION
+
 STATUS_NO_FIX = gpsdshm.shm.STATUS_NO_FIX
 STATUS_FIX = gpsdshm.shm.STATUS_FIX
 STATUS_DGPS_FIX = gpsdshm.shm.STATUS_DGPS_FIX
+
 SEEN_GPS = gpsdshm.shm.SEEN_GPS
 SEEN_RTCM2 = gpsdshm.shm.SEEN_RTCM2
 SEEN_RTCM3 = gpsdshm.shm.SEEN_RTCM3
 SEEN_AIS = gpsdshm.shm.SEEN_AIS
+
+MAXCHANNELS = gpsdshm.shm.MAXCHANNELS
+
+if GPSD_API_MAJOR_VERSION == 6:
+    MAXUSERDEVS = gpsdshm.shm.MAXUSERDEVS
+else:
+    MAXUSERDEVS = 1
 
 _error = gpsdshm.shm.cvar._error
 
@@ -127,7 +134,7 @@ class Devices(object):
         self.shm = shm
 
     def __getitem__(self, index):
-        
+    
         if index > gpsdshm.MAXUSERDEVS - 1:
             raise IndexError
 

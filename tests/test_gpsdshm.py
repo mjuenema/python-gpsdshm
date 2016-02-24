@@ -51,7 +51,10 @@ def test_satellites_index_error():
 
 @raises(IndexError)
 def test_devices_index_error():
-    print gpsd_shm.devices[gpsdshm.shm.MAXUSERDEVS]
+    if gpsdshm.GPSD_API_MAJOR_VERSION == 6:
+        print gpsd_shm.devices[gpsdshm.shm.MAXUSERDEVS]
+    else:
+        print gpsd_shm.devices[1]
 
 def test_gpsdshm_Shm_error():
     gpsdshm.shm.shm_get = minimock.Mock('gpsdshm.shm.shm_get')
@@ -186,6 +189,7 @@ def test_gpsdshm():
         assert isinstance(gpsd_shm.devices[i].path, (str)) or gpsd_shm.devices[i].path is None
 
         assert isinstance(gpsd_shm.devices[i].flags, (int))
+        assert gpsd_shm.devices[i].flags in [gpsdshm.SEEN_GPS, gpsdshm.SEEN_RTCM2, gpsdshm.SEEN_RTCM3, gpsdshm.SEEN_AIS, 0]
 
         assert isinstance(gpsd_shm.devices[i].driver, (str))
 
