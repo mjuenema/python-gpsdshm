@@ -113,7 +113,7 @@ class Device(object):
 
 class Devices(object):
     """List of `GpsdShmDevice` (singular) instances.
-    
+
        With gpsd 3.12 and later this is a list of devices, e.g. ``Device``
        instances. Earlier versions of gpsd embedded this into a C union
        and ``Devices`` will only provide information about the device
