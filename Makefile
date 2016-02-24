@@ -116,7 +116,7 @@ tox35: swig build_ext35
 # 
 flakes: lint
 lint: clean
-	pyflakes $(NAME)/*.py tests/*.py
+	pyflakes $(NAME)/*.py
 
 # clean
 #
