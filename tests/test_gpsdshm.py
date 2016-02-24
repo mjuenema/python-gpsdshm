@@ -47,7 +47,7 @@ def setup():
 
 @raises(IndexError)
 def test_satellites_index_error():
-    gpsd_shm.satellites[gpsdshm.shm.MAXCHANNELS]
+    print gpsd_shm.satellites[gpsdshm.shm.MAXCHANNELS]
 
 def test_gpsdshm_Shm_error():
     gpsdshm.shm.shm_get = minimock.Mock('gpsdshm.shm.shm_get')
@@ -57,7 +57,7 @@ def test_gpsdshm_Shm_error():
     except OSError:
         minimock.restore()
         return
-    raise
+    raise Exception('gpsdshm.shm.shm_get did nto raise OSError')
 
 @raises(OSError)
 def test_gpsdshm_error():
