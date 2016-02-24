@@ -184,9 +184,12 @@ single entry with information about the device that shipped the most recent upda
    0
    >>> gpsd_shm.devices[0].flags && gpsdshm.SEEN_AIS
    0
-   >>> gpsd_shm.devices[0].driver
-   >>> gpsd_shm.devices[0].subtype
+   >>> gpsd_shm.devices[0].driver         
+   # TODO
+   >>> gpsd_shm.devices[0].subtype        
+   # TODO
    >>> gpsd_shm.devices[0].activated
+   # TODO
    >>> gpsd_shm.devices[0].baudrate
    4800
    >>> gpsd_shm.devices[0].stopbits
@@ -194,8 +197,11 @@ single entry with information about the device that shipped the most recent upda
    >>> gpsd_shm.devices[0].parity         # 'N', 'O', or 'E'
    N
    >>> gpsd_shm.devices[0].cylce
+   1.0
    >>> gpsd_shm.devices[0].mincylce
+   1.0
    >>> gpsd_shm.devices[0].driver_mode
+   0
 
 
 Compiling gpsd with shared memory support

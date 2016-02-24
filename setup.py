@@ -2,7 +2,7 @@
 """setup.py for python-gpsdshm."""
 
 NAME = 'gpsdshm'
-VERSION = '0.1.1'
+VERSION = '0.2'
 LICENSE = 'BSD License'
 AUTHOR = 'Markus Juenemann'
 EMAIL = 'markus@juenemann.net'

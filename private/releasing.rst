@@ -24,12 +24,9 @@ The steps for preparing a new release are as follows:
 #. Verify that the "develop" branch passes all tests on Travis-CI (https://travis-ci.org/mjuenema/python-gpsdshm/branches)
 #. Verify that the tests cover 100% of the code on Codecov (https://www.codacy.com/app/markus_2/python-gpsdshm) 
 #. Start a new "release" branch.
-#. Update the version numbers in the following files.
-   * ``setup.py``
-   * ``gpsdshm/__init__.py``
-   * ``docs/source/conf.py``
+#. Update the version number in ``setup.py``.
 #. Update the ``HISTORY.rst`` file.
-#. Verify that the code examples in ``README.rst`` and ``docs/source/*.rst`` are current.
+#. Verify that the code examples in ``README.rst`` are correct.
 #. Push the "release" branch to Github.
 #. Verify that the "release" branch has no issues on Codacy.
 #. Verify that the "release" branch has no issues on Landscape.
