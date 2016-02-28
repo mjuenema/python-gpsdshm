@@ -47,14 +47,14 @@ def setup():
 
 @raises(IndexError)
 def test_satellites_index_error():
-    print gpsd_shm.satellites[gpsdshm.shm.MAXCHANNELS]
+    x = gpsd_shm.satellites[gpsdshm.shm.MAXCHANNELS]
 
 @raises(IndexError)
 def test_devices_index_error():
     if gpsdshm.GPSD_API_MAJOR_VERSION == 6:
-        print gpsd_shm.devices[gpsdshm.MAXUSERDEVS]
+        x = gpsd_shm.devices[gpsdshm.MAXUSERDEVS]
     else:
-        print gpsd_shm.devices[1]
+        x = gpsd_shm.devices[1]
 
 def test_gpsdshm_Shm_error():
     gpsdshm.shm.shm_get = minimock.Mock('gpsdshm.shm.shm_get')
