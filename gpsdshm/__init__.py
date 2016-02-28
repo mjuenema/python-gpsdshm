@@ -126,8 +126,8 @@ class Devices(object):
        and ``Devices`` will only provide information about the device
        that shipped the last update.
        
-       This list will always be ``gpsdshm.MAXDEVICES`` long, regardless
-       of how many satellites are in view.
+       This list will always be ``gpsdshm.MAXUSERDEVS`` long, regardless
+       of how many devices are connected.
     """
 
     def __init__(self, shm):
