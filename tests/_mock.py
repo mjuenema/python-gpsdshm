@@ -6,7 +6,7 @@ Markus Juenemann, 04-Feb-2016
 """
 
 import time
-from gpsdshm.shm import MAXCHANNELS, MAXUSERDEVS
+from gpsdshm import MAXCHANNELS, MAXUSERDEVS
 from gpsdshm import Satellite, Device, SEEN_GPS
 
 class MockFix(object):
