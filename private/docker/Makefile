@@ -44,11 +44,13 @@ gpsfake: gpsfake_3.0 \
          gpsfake_3.9 \
          gpsfake_3.10 \
          gpsfake_3.11 \
-         gpsfake_3.12 \
          gpsfake_3.13 \
          gpsfake_3.14 \
          gpsfake_3.15 \
          gpsfake_3.16
+
+# gpsfake doesn't seem to work well with gpsd-3.12
+#         gpsfake_3.12 \
 
 
 build: Dockerfile
