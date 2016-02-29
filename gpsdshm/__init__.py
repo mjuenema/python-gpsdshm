@@ -72,9 +72,9 @@ class Satellite(object):
     """Class representing ``gpsd/gps.h:satellite_t``."""
 
     def __init__(self, ss, used, prn, elevation, azimuth):
-        self.ss = self.snr = ss
+        self.ss = self.snr = ss                                     # pylint: disable=invalid-name
         self.used = used and True
-        self.prn = self.PRN = prn
+        self.prn = self.PRN = prn                                   # pylint: disable=invalid-name
         self.elevation = elevation
         self.azimuth = azimuth
 
