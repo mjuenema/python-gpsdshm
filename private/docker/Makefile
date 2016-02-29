@@ -33,7 +33,22 @@ test: test_3.0 \
       test_3.16
 
 gpsfake: gpsfake_3.0 \
-         gpsfake_3.1
+         gpsfake_3.1 \
+         gpsfake_3.2 \
+         gpsfake_3.3 \
+         gpsfake_3.4 \
+         gpsfake_3.5 \
+         gpsfake_3.6 \
+         gpsfake_3.7 \
+         gpsfake_3.8 \
+         gpsfake_3.9 \
+         gpsfake_3.10 \
+         gpsfake_3.11 \
+         gpsfake_3.12 \
+         gpsfake_3.13 \
+         gpsfake_3.14 \
+         gpsfake_3.15 \
+         gpsfake_3.16
 
 
 build: Dockerfile
