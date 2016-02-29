@@ -1,30 +1,18 @@
 
+# Docker tag is the branch with 'master' replaced with 'latest'
+#
+BRANCH := $(subst /,_,$(shell git branch | awk '$$1 ~ /^\*/ { print $$2 }'))
+DOCKERTAG := $(subst master,latest,$(BRANCH))
 
 all: help
 
 help:
-	@echo "make -k build         - Build all Docker images"
-	@echo "make -k test          - Start all Docker images and run tests"
-	@echo "make clean_failed     - Delete failed Docker containers"
-	@echo "make clean_dangling   - Delete dangling Docker images"
-
-build: build_3.0 \
-       build_3.1 \
-       build_3.2 \
-       build_3.3 \
-       build_3.4 \
-       build_3.5 \
-       build_3.6 \
-       build_3.7 \
-       build_3.8 \
-       build_3.9 \
-       build_3.10 \
-       build_3.11 \
-       build_3.12 \
-       build_3.13 \
-       build_3.14 \
-       build_3.15 \
-       build_3.16
+	@echo "make build           - Build Docker image"
+	@echo "make test            - Start Docker image and run tests (mock or gpsfake)"
+	@echo "make gpsfake         - Start Docker image and run tests (gpsfake)"
+	@echo "make run             - Start Docker image"
+	@echo "make clean_failed    - Delete failed Docker containers"
+	@echo "make clean_dangling  - Delete dangling Docker images"
 
 test: test_3.0 \
       test_3.1 \
@@ -44,13 +32,49 @@ test: test_3.0 \
       test_3.15 \
       test_3.16
 
-build_3.%: Dockerfile
-	docker build --build-arg RELEASE=release-$(subst build_,,$@) --build-arg http_proxy=$(http_proxy) \
-	             --build-arg https_proxy=$(https_proxy) -t mjuenema/pythons-gpsd-release-$(subst build_,,$@)-gpsdshm .
+gpsfake: gpsfake_3.0 \
+         gpsfake_3.1 \
+         gpsfake_3.2 \
+         gpsfake_3.3 \
+         gpsfake_3.4 \
+         gpsfake_3.5 \
+         gpsfake_3.6 \
+         gpsfake_3.7 \
+         gpsfake_3.8 \
+         gpsfake_3.9 \
+         gpsfake_3.10 \
+         gpsfake_3.11 \
+         gpsfake_3.13 \
+         gpsfake_3.14 \
+         gpsfake_3.15 \
+         gpsfake_3.16
 
-test_3.%: build_3.%
-	docker run --rm -v `pwd`/workdir:/workdir mjuenema/pythons-gpsd-release-$(subst test_,,$@)-gpsdshm
+# gpsfake doesn't seem to work well with gpsd-3.12
+#         gpsfake_3.12 \
 
+
+build: Dockerfile
+	docker build --build-arg http_proxy=$(http_proxy) \
+	             --build-arg https_proxy=$(https_proxy) \
+                     -t mjuenema/python-gpsdshm:$(DOCKERTAG) .
+
+test_3.%: build
+	docker run -it --rm -e "RELEASE=$(subst test_,,$@)" \
+		-v `pwd`/workdir/cache:/home/developer/.cache \
+		-v `pwd`/workdir/ccache:/home/developer/.ccache \
+		-v `pwd`/../..:/home/developer/src \
+		mjuenema/python-gpsdshm:$(DOCKERTAG) /run_tests.sh
+
+gpsfake_3.%: build
+	EL_RELEASE=$(subst gpsfake_,,$@) EL_DOCKERTAG=$(DOCKERTAG) ./expect-lite gpsfake.elt
+
+run:
+	docker run -it --rm \
+		-v `pwd`/workdir/cache:/home/developer/.cache \
+		-v `pwd`/workdir/ccache:/home/developer/.ccache \
+		-v `pwd`/../..:/home/developer/src \
+		mjuenema/python-gpsdshm:$(DOCKERTAG) /bin/bash
+	
 
 .PHONY: Dockerfile
 Dockerfile:
@@ -61,6 +85,6 @@ clean_dangling:
 		docker rmi `docker images -q -f dangling=true`
 
 clean_failed:
-	[ "`docker ps -q -a -f exited=1 -f exited=2 -f exited=137`" != "" ] && \
-		docker rm `docker ps -q -a -f exited=1 -f exited=2 -f exited=137`
+	[ "`docker ps -a | egrep 'Exited \([^0]' | cut -c 1-16`" != "" ] && \
+		docker rm `docker ps -a | egrep 'Exited \([^0]' | cut -c 1-16`	
 	

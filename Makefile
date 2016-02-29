@@ -90,7 +90,7 @@ swig: clean-build
 # test
 #
 test: build_ext
-	python `which nosetests` -v -x tests/
+	python `which nosetests` -v -x --pdb --pdb-fail tests/
 
 tox: tox26 tox27 tox33 tox34 tox35
 
@@ -116,7 +116,7 @@ tox35: swig build_ext35
 # 
 flakes: lint
 lint: clean
-	pyflakes $(NAME)/*.py tests/*.py
+	pyflakes $(NAME)/*.py
 
 # clean
 #

@@ -1,31 +1,25 @@
-#!/bin/sh
+#!/bin/sh -x
 
+# Run tests against gpsfake inside Docker
 #
-# Run tests inside Docker container
+# The following environment variables should be set
 #
-# Markus Juenemann, 06-feb-2016
+# RELEASE	# gpsd release, e.g. '3.16'
+#
+# Markus Juenemann, 20-Feb-2016
 
-GPSD_VERSION=`cat /gpsd.release | cut -d- -f 2`
 
-run() {
-    # $1 = gpsd version (3.x)
-    # $2 = gpsdshm branch
-    # $3 = Python version (2.x, 3.x)
+RELEASE=${RELEASE:-3.16}
 
-    git checkout $2
+cd /home/developer/src
+rm .coverage
 
-    git pull origin $2
+chmod 777 /dev/pts
 
-    make tox`echo $3 | sed 's/[^0-9]//g'`
+GPSD_HOME=/opt/gpsd/$RELEASE/sbin python2.7 /opt/gpsd/3.1/bin/gpsfake -c 0.1 -n tests/short.nmea &
 
-    echo $? > /workdir/$1_$2_$3.result
-}
+sleep 5
 
-cd /tmp/python-gpsdshm
+chmod -v 666 /dev/pts/*
 
-for gpsdshm_branch in master develop `git tag`; do
-    for python_version in 2.6 2.7 3.3 3.4 3.5; do
-        run $GPSD_VERSION $gpsdshm_branch $python_version
-    done
-done
-
+CPATH=/opt/gpsd/$RELEASE/include TOX_TESTENV_PASSENV=CPATH make tox

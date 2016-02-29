@@ -1,19 +1,92 @@
+#
+# 
+# Notes:
+# - the SCons Python package must be installed using Python 2.x even if
+#   testing Python 3.x. Scons is only required to build gpsd.
+
 language: python
 
+addons:
+  apt:
+    packages:
+    - swig
+    - mercurial
+    - chrpath
+    - xmlto
+    - ccache
+    
 python:
-  - "3.5"
-  - "3.4"
-  - "3.3"
-  - "2.7"
-  - "2.6"
-  - "pypy"
-  - "pypy3"
+  - 2.6
+  - 2.7
+  - 3.3
+  - 3.4
+  - 3.5
+  
+env:
+  - GPSD_RELEASE=3.16
+  - GPSD_RELEASE=3.15
+  - GPSD_RELEASE=3.14
+  - GPSD_RELEASE=3.13
+  - GPSD_RELEASE=3.12
+  - GPSD_RELEASE=3.11
+  - GPSD_RELEASE=3.10
+  - GPSD_RELEASE=3.9
+  - GPSD_RELEASE=3.8
+  - GPSD_RELEASE=3.7
+  - GPSD_RELEASE=3.6
+  - GPSD_RELEASE=3.5
+  - GPSD_RELEASE=3.4
+  - GPSD_RELEASE=3.3
+  - GPSD_RELEASE=3.2
+  - GPSD_RELEASE=3.1
+  - GPSD_RELEASE=3.0
+  
+#branches:
+#  only:
+#    - master
+#    - develop
+#    - /^release.*/
+#    - /^feature.*/
+#    - /^hotfix.*/
+    
+cache:
+  apt: true
+  ccache: true
+  directories:
+  - $HOME/cache
+  - $HOME/.ccache
+  - $HOME/.cache
 
 before_install:
-  - pip install codecov
-  - sudo apt-get install -qq swig
-
+  - cd $HOME
+  - test -d cache || mkdir -v cache
+  - cd $HOME/cache
+  - test -f scons/bootstrap.py || hg clone https://bitbucket.org/scons/scons
+  - cd $HOME/cache/scons
+  - /usr/bin/python2 bootstrap.py build/scons
+  - cd build/scons
+  - /usr/bin/python2 setup.py install --prefix=$HOME
+  - cd $HOME
+  - pip${TRAVIS_PYTHON_VERSION} install --upgrade pip 
+  - pip${TRAVIS_PYTHON_VERSION} install --upgrade setuptools 
+  - pip${TRAVIS_PYTHON_VERSION} install --upgrade codecov
+  
+before_script:
+  - cd $HOME/cache
+  - test -f gpsd/gps.h || git clone git://git.savannah.nongnu.org/gpsd.git
+  - cd gpsd 
+  - git fetch --tags
+  - cd $HOME
+  - git clone $HOME/cache/gpsd
+  - cd gpsd
+  - git checkout release-$GPSD_RELEASE
+  - git pull origin release-$GPSD_RELEASE
+  - test "$GPSD_RELEASE" != "3.4" || rm -fv leapseconds.cache  # issue 18
+  - PATH=/usr/lib/ccache:$PATH /usr/bin/python2 $HOME/bin/scons export_shm=yes python=no manbuild=no qt=no leapfetch=no prefix=$HOME
+  - ccache --show-stats
+  
 install:
+  - cd $TRAVIS_BUILD_DIR
   - pip install -r requirements.txt
   - pip install -r test_requirements.txt
   - pip install coverage
@@ -22,4 +95,9 @@ after_success:
   - codecov
 
 # command to run tests, e.g. python setup.py test
-script: make test
+script: 
+  - cd $TRAVIS_BUILD_DIR/gpsdshm
+  - swig -python shm.i
+  - cd $TRAVIS_BUILD_DIR
+  - CPATH=$HOME/gpsd LIBRARY_PATH=$HOME/gpsd python${TRAVIS_PYTHON_VERSION} setup.py build_ext --inplace
+  - python${TRAVIS_PYTHON_VERSION} `which nosetests` -v tests/

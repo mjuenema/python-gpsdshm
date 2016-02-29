@@ -6,7 +6,8 @@ Markus Juenemann, 04-Feb-2016
 """
 
 import time
-from gpsdshm.shm import MAXCHANNELS
+from gpsdshm import MAXCHANNELS, MAXUSERDEVS
+from gpsdshm import Satellite, Device, SEEN_GPS
 
 class MockFix(object):
     def __init__(self):
@@ -38,25 +39,37 @@ class MockDop(object):
         self.gdop = 2.4342743978108503
 
 
-class MockSatellite(object):
+class MockSatellite(Satellite):
     def __init__(self, prn):
-        self.ss = 0.0 
-        self.prn = self.PRN = prn
-        self.used = True
-        self.elevation = prn
-        self.azimuth = prn
-        
+        super(MockSatellite, self).__init__(ss=0.0, used=True, prn=prn, elevation=prn, azimuth=prn)
+
+
+class MockDevice(Device):
+    def __init__(self, index):
+        super(MockDevice, self).__init__(path="/dev/ttyAMA%d" % (index),
+                                         flags=SEEN_GPS,
+                                         driver="TODO",
+                                         subtype="TODO",
+                                         activated=time.time(),
+                                         baudrate=4800,
+                                         stopbits=1,
+                                         parity='N',
+                                         cycle=1.0,
+                                         mincycle=1.0,
+                                         driver_mode=0)
+
+
 
 class MockShm(object):
 
     def __init__(self):
         self.online = time.time()
-        self.status = True
+        self.status = 1
         self.fix_time = time.time()
         self.satellites_visible = 8
         self.fix = MockFix()
         self.dop = MockDop()
         self.skyview_time = float('nan')
         self.satellites = [MockSatellite(prn) for prn in range(MAXCHANNELS)]
-         
-    
+        self.devices = [MockDevice(index) for index in range(MAXUSERDEVS)]
+        self.ndevices = MAXUSERDEVS

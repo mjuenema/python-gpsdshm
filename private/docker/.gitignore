@@ -1,1 +1,2 @@
-workdir/*
+workdir/.cache/pip
+workdir/.ccache

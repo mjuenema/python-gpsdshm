@@ -1,0 +1,38 @@
+# Timeouts in this script may not work well on different
+# hardware or under load.
+
+*EXP_INFO
+
+>docker run --name=gpsdshmgpsfake -it --rm -e "RELEASE=$EL_RELEASE" -v `pwd`/../..:/home/developer/src mjuenema/python-gpsdshm:$EL_DOCKERTAG /run_tests.sh
+
+# Fail script
+*~gpsfake_fail.elt
+
+@45
+<<Using real gpsd data for tests
+@2
+<<py26: commands succeeded
+
+@45
+<<Using real gpsd data for tests
+@2
+<<py27: commands succeeded
+
+@45
+<<Using real gpsd data for tests
+@2
+<<py33: commands succeeded
+
+@45
+<<Using real gpsd data for tests
+@2
+<<py34: commands succeeded
+
+@45
+<<Using real gpsd data for tests
+@2
+<<py35: commands succeeded
+
+@45
+; Wait until Docker container has stopped
+>date

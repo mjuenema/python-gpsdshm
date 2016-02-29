@@ -1,6 +1,8 @@
 
 #include "gps.h"
 
+char *_error;
+
 /* shared memory */
 struct shmexport_t *shm_get();
 
@@ -43,3 +45,17 @@ int get_satellite_used(struct shmexport_t *shm, unsigned int index);
 int get_satellite_prn(struct shmexport_t *shm, unsigned int index);
 int get_satellite_elevation(struct shmexport_t *shm, unsigned int index);
 int get_satellite_azimuth(struct shmexport_t *shm, unsigned int index);
+
+/* devconfig_t and related */
+int get_ndevices(struct shmexport_t *shm);
+char *get_device_path(struct shmexport_t *shm, unsigned int index);
+int get_device_flags(struct shmexport_t *shm, unsigned int index);
+char *get_device_driver(struct shmexport_t *shm, unsigned int index);
+char *get_device_subtype(struct shmexport_t *shm, unsigned int index);
+double get_device_activated(struct shmexport_t *shm, unsigned int index);
+unsigned int get_device_baudrate(struct shmexport_t *shm, unsigned int index);
+unsigned int get_device_stopbits(struct shmexport_t *shm, unsigned int index);
+char *get_device_parity(struct shmexport_t *shm, unsigned int index);
+double get_device_cycle(struct shmexport_t *shm, unsigned int index);
+double get_device_mincycle(struct shmexport_t *shm, unsigned int index);
+int get_device_driver_mode(struct shmexport_t *shm, unsigned int index);

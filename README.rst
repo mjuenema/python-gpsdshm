@@ -8,13 +8,61 @@ Overview
 *python-gpsdshm* provides a read-only(!) Python interface to `gpsd`_'s shared memory. It provides
 a single class ``Shm`` that exposes the fields of the shared memory structure as attributes. The
 *python-gpsdshm* API is (loosely) modelled on gpsd version 3.16 (API 6.1). gpsd releases earlier
-than 3.0 are not supported.
+than 3.0 are not supported. 
 
-*python-gpsdshm* is implemented using Swig_ and requires the `gpsd` header files for compilation.
+*python-gpsdshm* is implemented using Swig_ and requires the `gpsd` header files for compilation. 
+Please note that some Linux distributions contain Swig_ releases that are too old for working with Python 3.
 
 Many Linux distributions ship the gpsd package **without** shared memory support.
 See `Compiling gpsd with shared memory support`_ for details how to build gpsd
 with shared memory support.
+
+Status
+======
+
+*python-gpsdshm* is automatically tested against the following Python versions:
+
+* Python 2.6
+* Python 2.7
+* Python 3.3
+* Python 3.4
+* Python 3.5
+
++--------------+-------------------+-------------------+--------------------+--------------------+
+| Branch       | Travis-CI         | Codecov           | Codacy             | Landscape          |
++==============+===================+===================+====================+====================+
+| master       | |traviscimaster|  | |codecovmaster|   | |codacymaster|     | |landscapemaster|  |
++--------------+-------------------+-------------------+--------------------+--------------------+
+| develop      | |traviscidevelop| | |codecovdevelop|  | |codacydevelop|    | |landscapedevelop| |
++--------------+-------------------+-------------------+--------------------+--------------------+
+
+.. |traviscimaster| image:: https://img.shields.io/travis/mjuenema/python-gpsdshm/master.svg
+    :target: https://travis-ci.org/mjuenema/python-gpsdshm/branches
+
+.. |traviscidevelop| image:: https://img.shields.io/travis/mjuenema/python-gpsdshm/develop.svg
+    :target: https://travis-ci.org/mjuenema/python-gpsdshm/branches
+   
+.. |codecovmaster| image:: https://codecov.io/github/mjuenema/python-gpsdshm/coverage.svg?branch=master
+    :target: https://codecov.io/github/mjuenema/python-gpsdshm?branch=master
+    
+.. |codecovdevelop| image:: https://codecov.io/github/mjuenema/python-gpsdshm/coverage.svg?branch=develop
+    :target: https://codecov.io/github/mjuenema/python-gpsdshm?branch=develop
+    
+.. |codacymaster| image:: https://img.shields.io/codacy/aa369a5a5f1c4eccb69ba738ae1a93dd/master.svg
+    :target: https://www.codacy.com/app/markus_2/python-gpsdshm/dashboard
+
+.. |codacydevelop| image:: https://img.shields.io/codacy/aa369a5a5f1c4eccb69ba738ae1a93dd/develop.svg
+    :target: https://www.codacy.com/app/markus_2/python-gpsdshm/dashboard
+    
+.. |landscapemaster| image:: https://landscape.io/github/mjuenema/python-gpsdshm/master/landscape.svg?style=flat
+   :target: https://landscape.io/github/mjuenema/python-gpsdshm/master
+   
+.. |landscapedevelop| image:: https://landscape.io/github/mjuenema/python-gpsdshm/develop/landscape.svg?style=flat
+   :target: https://landscape.io/github/mjuenema/python-gpsdshm/develop
+
+.. _`python-gpsdshm Travis-CI page`: https://travis-ci.org/mjuenema/python-gpsdshm
+
+
 
 .. _`gpsd`: http://www.catb.org/gpsd/
 .. _Swig: http://www.swig.org/Doc1.3/Python.html
@@ -22,23 +70,29 @@ with shared memory support.
 Example
 =======
 
-The example below shows all attributes and typical values (of a stationary GPS, placed about one metre inside a window).
+The ``gpsdshm.Shm`` class provides the interface to gpsd's shared memory.
 
 .. code-block:: python
 
    >>> import gpsdshm
    >>> gpsd_shm = gpsdshm.Shm()
-   >>> gpsd_shm.set
-   TODO: <Swig Object of type 'gps_mask_t *' at 0x133bf50>
-   >>> gpsd_shm.online               # True if GPS is online
-   gpsd_shm.online
-   TODO: Out[6]: 1454057376.6934643
-   >>> gpsd_shm.status               # Do we have a fix (True/False)?
-   gpsd_shm.status
-   TODO Out[7]: 1
+   >>> gpsd_shm.online               # Timestamp if GPS is online, 0 otherwise
+   1454057376.6934643
+   >>> gpsd_shm.status               # Do we have a fix?
+   1
+   >>> gpsd_shm.status == gpsdshm.STATUS_FIX 
+   True
+   >>> gpsd_shm.status == gpsdshm.STATUS_NO_FIX 
+   False
    >>> gpsd_shm.skyview_time         # Skyview timestamp
    >>> gpsd_shm.satellites_visible   # Number of satellites in view
-   TODO: nan
+   6
+
+GPS Fix
+-------
+
+.. code-block:: python
+
    >>> gpsd_shm.fix.time             # Time of update
    1454057448.0
    >>> gpsd_shm.fix.mode             # Mode of fix (0=not seen, 1=no fix, 2=2D, 3=3D)
@@ -69,6 +123,12 @@ The example below shows all attributes and typical values (of a stationary GPS, 
    0.0
    >>> gpsd_shm.fix.epc              # Vertical speed uncertainty
    nan
+
+Dilution of precisions (DOP)
+----------------------------
+
+.. code-block:: python
+
    >>> gpsd_shm.dop.xdop
    0.6693854586176363
    >>> gpsd_shm.dop.ydop
@@ -84,8 +144,13 @@ The example below shows all attributes and typical values (of a stationary GPS, 
    >>> gpsd_shm.dop.gdop
    2.4342743978108503
 
-Information about satellites is contained in the ``satellites`` list.
-   
+Satellites
+----------
+
+Information about satellites is contained in the ``satellites`` list. The
+list is always ``gpsdshm.MAXCHANNELS`` entries long, even if only a few
+satellites are visible.
+
 .. code-block:: python
    
    >>> gpsd_shm.satellites[0].ss         # Signal-to-noise ratio (dB)
@@ -98,6 +163,45 @@ Information about satellites is contained in the ``satellites`` list.
    56
    >>> gpsd_shm.satellites[0].azimuth    # Azimuth, degrees
    59
+
+Devices
+-------
+
+The ``devices`` list contains either information about all devices gpsd is currently
+monitoring (gpsd release 3.12 and later, ``gpsdshm.GPSD_API_MAJOR_VERSION`` == 6) or a 
+single entry with information about the device that shipped the most recent update 
+(gpsd release 3.11 and earlier,  ``gpsdshm.GPSD_API_MAJOR_VERSION`` == 5).
+
+.. code-block:: python
+
+   >>> gpsd_shm.devices[0].path
+   /dev/ttyAMA0
+   >>> gpsd_shm.devices[0].flags && gpsdshm.SEEN_GPS
+   1
+   >>> gpsd_shm.devices[0].flags && gpsdshm.SEEN_RTCM2
+   0
+   >>> gpsd_shm.devices[0].flags && gpsdshm.SEEN_RTCM3
+   0
+   >>> gpsd_shm.devices[0].flags && gpsdshm.SEEN_AIS
+   0
+   >>> gpsd_shm.devices[0].driver         
+   # TODO
+   >>> gpsd_shm.devices[0].subtype        
+   # TODO
+   >>> gpsd_shm.devices[0].activated
+   # TODO
+   >>> gpsd_shm.devices[0].baudrate
+   4800
+   >>> gpsd_shm.devices[0].stopbits
+   1
+   >>> gpsd_shm.devices[0].parity         # 'N', 'O', or 'E'
+   N
+   >>> gpsd_shm.devices[0].cylce
+   1.0
+   >>> gpsd_shm.devices[0].mincylce
+   1.0
+   >>> gpsd_shm.devices[0].driver_mode
+   0
 
 
 Compiling gpsd with shared memory support
