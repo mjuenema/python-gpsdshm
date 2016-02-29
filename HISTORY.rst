@@ -3,7 +3,7 @@
 History
 =======
 
-0.2.0 (24-Feb-2016)
+0.2.0 (01-Mar-2016)
 -------------------
 
 * Implemented ``gpsdshm.Shm.devices``.
