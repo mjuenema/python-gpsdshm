@@ -24,10 +24,11 @@ if GPSD_API_MAJOR_VERSION == 6:
 else:
     MAXUSERDEVS = 1
 
-_error = gpsdshm.shm.cvar._error
+_error = gpsdshm.shm.cvar._error        # pylint: disable=invalid-name,protected-access
 
 
 class Fix(object):
+
     """Class representing ``gpsd/gps.h:gps_fix_t``."""
 
     def __init__(self, shm):
@@ -51,6 +52,7 @@ class Fix(object):
 
 
 class Dop(object):
+
     """Class representing ``gpsd/gps.h:dop_t``."""
 
     def __init__(self, shm):
@@ -66,7 +68,9 @@ class Dop(object):
 
 
 class Satellite(object):
+
     """Class representing ``gpsd/gps.h:satellite_t``."""
+
     def __init__(self, ss, used, prn, elevation, azimuth):
         self.ss = self.snr = ss
         self.used = used and True
@@ -76,6 +80,7 @@ class Satellite(object):
 
 
 class Satellites(object):
+
     """List of `GpsdShmSatellite` instances.
 
        This list will always be ``gpsdshm.MAXCHANNELS`` long, regardless
@@ -91,7 +96,7 @@ class Satellites(object):
         if index > gpsdshm.MAXCHANNELS - 1:
             raise IndexError
 
-        ss = gpsdshm.shm.get_satellite_ss(self.shm, index)
+        ss = gpsdshm.shm.get_satellite_ss(self.shm, index)          # pylint: disable=invalid-name
         prn = gpsdshm.shm.get_satellite_prn(self.shm, index)
         used = gpsdshm.shm.get_satellite_used(self.shm, prn) is True
         elevation = gpsdshm.shm.get_satellite_elevation(self.shm, index)
@@ -100,8 +105,10 @@ class Satellites(object):
         return Satellite(ss, used, prn, elevation, azimuth)
 
 
-class Device(object):
+class Device(object):           # pylint: disable=too-many-instance-attributes
+
     """Class representing ``gpsd/gps.h:devconfig_t``."""
+
     def __init__(self, path, flags, driver, subtype, activated,
                  baudrate, stopbits, parity, cycle, mincycle,
                  driver_mode):
@@ -119,6 +126,7 @@ class Device(object):
 
 
 class Devices(object):
+
     """List of `GpsdShmDevice` (singular) instances.
 
        With gpsd 3.12 and later this is a list of devices, e.g. ``Device``
@@ -155,6 +163,7 @@ class Devices(object):
 
 
 class Shm(object):
+
     """GPSd Shared Memory."""
 
     def __init__(self):
@@ -167,7 +176,6 @@ class Shm(object):
         self.dop = Dop(self.shm)
         self.satellites = Satellites(self.shm)
         self.devices = Devices(self.shm)
-
 
     set = property(lambda self: gpsdshm.shm.get_set(self.shm))
     online = property(lambda self: gpsdshm.shm.get_online(self.shm))
